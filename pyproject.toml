@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "bbsearch"
+version = "0.0.0"
+description = "A client library and CLI for accessing the Bug Bounty Search API"
+
+authors = []
+
+readme = "README.md"
+packages = [
+    {include = "bbsearch"},
+]
+include = ["CHANGELOG.md", "bbsearch/py.typed"]
+
+
+[tool.poetry.dependencies]
+python = "^3.8"
+httpx = "^0.13.3"
+
+
+[tool.poetry.dev-dependencies]
+black = "^19.10b0"
+pytest = "^5.4.3"
+pre-commit = "^2.6.0"
+flake8 = "^3.8.3"
+pytest-cov = "^2.10.0"
+validators = "^0.16.0"
+[tool.black]
+line-length = 88
+target_version = ['py38']
+exclude = '''
+(
+  /(
+    | \.git
+    | \.venv
+    | \.mypy_cache
+  )/
+)
+'''
