@@ -21,6 +21,7 @@ class BugBountySearch:
                 yield target
             page = targets.next_page
 
+    # should use @singledispatchmethod when we add support for creating programs
     def program(self, slug: str) -> Program:
         return get_program(client=self.client, slug=slug)
 
