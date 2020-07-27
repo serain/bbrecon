@@ -1,4 +1,5 @@
 from typing import Optional, List, Generator
+from pydantic import HttpUrl
 
 from .client import AuthenticatedClient
 from .api.programs import get_programs, get_program
@@ -6,10 +7,10 @@ from .models import Program
 
 
 class BugBountyRecon:
-    def __init__(self, token: str):
-        self.client = AuthenticatedClient(
-            base_url="https://api.bugbountyrecon.com", token=token
-        )
+    def __init__(
+        self, token: str, *, base_url: HttpUrl = "https://api.bugbountyrecon.com"
+    ):
+        self.client = AuthenticatedClient(base_url=base_url, token=token)
 
     def _paginate(self, api_function, **kwargs):
         page = 0

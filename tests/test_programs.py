@@ -3,7 +3,9 @@ import validators
 from bbrecon import BugBountyRecon, models
 
 
-bb = BugBountyRecon(os.environ.get("BBRECON_API_KEY"))
+bb = BugBountyRecon(
+    os.environ.get("BBRECON_API_KEY"), base_url="https://api.dev.bugbountysearch.com"
+)
 
 
 def test_get_programs():
