@@ -12,7 +12,6 @@ class File:
     mime_type: Optional[str] = None
 
     def to_tuple(self) -> Tuple[Optional[str], Union[BinaryIO, TextIO], Optional[str]]:
-        """ Return a tuple representation that httpx will accept for multipart/form-data """
         return self.file_name, self.payload, self.mime_type
 
 

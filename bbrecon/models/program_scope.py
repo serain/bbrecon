@@ -15,10 +15,7 @@ class ProgramScope:
         type = self.type
         value = self.value
 
-        return {
-            "type": type,
-            "value": value,
-        }
+        return {"type": type, "value": value}
 
     @staticmethod
     def from_dict(d: Dict[str, Any]) -> ProgramScope:
@@ -26,4 +23,4 @@ class ProgramScope:
 
         value = d["value"]
 
-        return ProgramScope(type=type, value=value,)
+        return ProgramScope(type=type, value=value)

@@ -1,15 +1,15 @@
 [tool.poetry]
-name = "bbsearch"
+name = "bbrecon"
 version = "0.0.0"
-description = "A client library and CLI for accessing the Bug Bounty Search API"
+description = "A client library and CLI for accessing the Bug Bounty Recon API"
 
 authors = []
 
 readme = "README.md"
 packages = [
-    {include = "bbsearch"},
+    {include = "bbrecon"},
 ]
-include = ["CHANGELOG.md", "bbsearch/py.typed"]
+include = ["CHANGELOG.md", "bbrecon/py.typed"]
 
 
 [tool.poetry.dependencies]

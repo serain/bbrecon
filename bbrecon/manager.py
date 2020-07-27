@@ -5,12 +5,10 @@ from .api.programs import get_programs, get_program
 from .models import Program
 
 
-class BugBountySearch:
-    def __init__(
-        self, token: str,
-    ):
+class BugBountyRecon:
+    def __init__(self, token: str):
         self.client = AuthenticatedClient(
-            base_url="https://api.dev.bugbountysearch.com", token=token,
+            base_url="https://api.bugbountyrecon.com", token=token
         )
 
     def _paginate(self, api_function, **kwargs):
@@ -21,7 +19,6 @@ class BugBountySearch:
                 yield target
             page = targets.next_page
 
-    # should use @singledispatchmethod when we add support for creating programs
     def program(self, slug: str) -> Program:
         return get_program(client=self.client, slug=slug)
 

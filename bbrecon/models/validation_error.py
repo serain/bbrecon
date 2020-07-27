@@ -18,11 +18,7 @@ class ValidationError:
         msg = self.msg
         type = self.type
 
-        return {
-            "loc": loc,
-            "msg": msg,
-            "type": type,
-        }
+        return {"loc": loc, "msg": msg, "type": type}
 
     @staticmethod
     def from_dict(d: Dict[str, Any]) -> ValidationError:
@@ -32,4 +28,4 @@ class ValidationError:
 
         type = d["type"]
 
-        return ValidationError(loc=loc, msg=msg, type=type,)
+        return ValidationError(loc=loc, msg=msg, type=type)

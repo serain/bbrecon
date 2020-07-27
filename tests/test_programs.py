@@ -1,9 +1,9 @@
 import os
 import validators
-from bbsearch import BugBountySearch, models
+from bbrecon import BugBountyRecon, models
 
 
-bb = BugBountySearch(os.environ.get("BBSEARCH_API_KEY"))
+bb = BugBountyRecon(os.environ.get("BBRECON_API_KEY"))
 
 
 def test_get_programs():

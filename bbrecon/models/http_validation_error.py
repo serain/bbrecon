@@ -22,9 +22,7 @@ class HTTPValidationError:
 
                 detail.append(detail_item)
 
-        return {
-            "detail": detail,
-        }
+        return {"detail": detail}
 
     @staticmethod
     def from_dict(d: Dict[str, Any]) -> HTTPValidationError:
@@ -34,4 +32,4 @@ class HTTPValidationError:
 
             detail.append(detail_item)
 
-        return HTTPValidationError(detail=detail,)
+        return HTTPValidationError(detail=detail)

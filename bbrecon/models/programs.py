@@ -22,10 +22,7 @@ class Programs:
 
         next_page = self.next_page
 
-        return {
-            "data": data,
-            "nextPage": next_page,
-        }
+        return {"data": data, "nextPage": next_page}
 
     @staticmethod
     def from_dict(d: Dict[str, Any]) -> Programs:
@@ -37,4 +34,4 @@ class Programs:
 
         next_page = d.get("nextPage")
 
-        return Programs(data=data, next_page=next_page,)
+        return Programs(data=data, next_page=next_page)
