@@ -21,10 +21,10 @@ class BugBountySearch:
                 yield target
             page = targets.next_page
 
-    def get_program(self, slug: str) -> Program:
+    def program(self, slug: str) -> Program:
         return get_program(client=self.client, slug=slug)
 
-    def get_programs(
+    def programs(
         self,
         *,
         name: Optional[str] = "",
