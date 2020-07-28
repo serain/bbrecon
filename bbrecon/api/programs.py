@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
+from datetime import datetime
 
 import httpx
 
@@ -18,6 +19,7 @@ def get_programs(
     exclude_platforms: Optional[List[str]] = [],
     rewards: Optional[List[str]] = [],
     page: Optional[int] = 0,
+    created_since: Optional[datetime] = None,
 ) -> Union[Programs, HTTPValidationError]:
 
     """ Retrieve a list of indexed bug bounty programs, using filters to
@@ -60,6 +62,8 @@ Returns up to 50 programs per page.
         params["rewards"] = json_rewards
     if page is not None:
         params["page"] = page
+    if created_since is not None:
+        params["createdSince"] = created_since.strftime("%Y-%m-%dT%H:%M:%SZ")
 
     response = httpx.get(url=url, headers=client.get_headers(), params=params)
 

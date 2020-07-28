@@ -1,5 +1,6 @@
 from typing import Optional, List, Generator
 from pydantic import HttpUrl
+from datetime import datetime
 
 from .client import AuthenticatedClient
 from .api.programs import get_programs, get_program
@@ -31,6 +32,7 @@ class BugBountyRecon:
         platforms: Optional[List[str]] = [],
         exclude_platforms: Optional[List[str]] = [],
         rewards: Optional[List[str]] = [],
+        created_since: Optional[datetime] = None,
     ) -> Generator[Program, None, None]:
         for program in self._paginate(
             get_programs,
@@ -39,5 +41,6 @@ class BugBountyRecon:
             platforms=platforms,
             exclude_platforms=exclude_platforms,
             rewards=rewards,
+            created_since=created_since,
         ):
             yield program
