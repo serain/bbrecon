@@ -27,11 +27,11 @@ class BugBountyRecon:
     def programs(
         self,
         *,
-        name: Optional[str] = "",
-        types: Optional[List[str]] = [],
-        platforms: Optional[List[str]] = [],
-        exclude_platforms: Optional[List[str]] = [],
-        rewards: Optional[List[str]] = [],
+        name: Optional[str] = None,
+        types: Optional[List[str]] = None,
+        platforms: Optional[List[str]] = None,
+        exclude_platforms: Optional[List[str]] = None,
+        rewards: Optional[List[str]] = None,
         created_since: Optional[datetime] = None,
     ) -> Generator[Program, None, None]:
         for program in self._paginate(
