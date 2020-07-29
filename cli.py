@@ -165,5 +165,9 @@ format '%Y-%m-%d' can be supplied. Alternatively, the following keywords are sup
     globals()[f"output_{output}_programs_table"](programs)
 
 
-if __name__ == "__main__":
+def main():
     app()
+
+
+if __name__ == "__main__":
+    main()
