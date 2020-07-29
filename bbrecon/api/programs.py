@@ -1,5 +1,6 @@
 from typing import Any, Dict, List, Optional, Union, cast
 from datetime import datetime
+from urllib.parse import urljoin
 
 import httpx
 
@@ -45,6 +46,8 @@ def get_programs(
         return Programs.from_dict(cast(Dict[str, Any], response.json()))
     if response.status_code == 422:
         return HTTPValidationError.from_dict(cast(Dict[str, Any], response.json()))
+    if response.status_code == 401:
+        return HTTPValidationError.from_dict(cast(Dict[str, Any], response.json()))
     else:
         raise ApiResponseError(response=response)
 
@@ -56,6 +59,8 @@ def get_program(*, client: Client, slug: str) -> Union[Program, HTTPValidationEr
     if response.status_code == 200:
         return Program.from_dict(cast(Dict[str, Any], response.json()))
     if response.status_code == 422:
+        return HTTPValidationError.from_dict(cast(Dict[str, Any], response.json()))
+    if response.status_code == 401:
         return HTTPValidationError.from_dict(cast(Dict[str, Any], response.json()))
     else:
         raise ApiResponseError(response=response)
