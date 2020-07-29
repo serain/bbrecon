@@ -109,18 +109,25 @@ def programs_get(
     ),
     name: str = typer.Option(None, "--name", "-n", help="Filter by name."),
     types: List[str] = typer.Option(
-        None, "--types", "-t", help="Filter by scope types. Can be used multiple times."
+        None, "--type", "-t", help="Filter by scope type. Can be used multiple times."
     ),
     rewards: List[str] = typer.Option(
-        None, "--rewards", "-r", help="Filter by reward types.",
+        None,
+        "--reward",
+        "-r",
+        help="Filter by reward type. Can be used multiple times.",
     ),
     platforms: List[str] = typer.Option(
-        None, "--platforms", "-p", help="Filter by platforms."
+        None,
+        "--platform",
+        "-p",
+        help="Filter by platform. Can be used multiple times.",
     ),
     exclude_platforms: List[str] = typer.Option(
         None,
-        "--exclude-platforms",
-        help="Exclude specific platforms. Ignored if --platforms was passed.",
+        "--exclude-platform",
+        help="""Exclude specific platform. Ignored if --platform was passed. Can be
+used multiple times.""",
     ),
     created_since: str = typer.Option(
         None,
@@ -137,11 +144,11 @@ format '%Y-%m-%d' can be supplied. Alternatively, the following keywords are sup
     """
     Display one or many bug bounty programs, in a table or as JSON.
 
-    If a list of slugs is provided is CLI arguments, this command will fetch the
+    If a list of slugs is provided as CLI arguments, the command will fetch the
     specified programs. Alternatively, the command will search through all programs
-    using the supplied filters.
+    using the supplied options.
 
-    CLI option filters are ignored if slugs are provided.
+    CLI filter options are ignored if slugs are provided.
     """
 
     if created_since:
