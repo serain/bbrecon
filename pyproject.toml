@@ -11,6 +11,8 @@ packages = [
 ]
 include = ["CHANGELOG.md", "bbrecon/py.typed"]
 
+[tool.poetry.scripts]
+bbrecon = 'cli:main'
 
 [tool.poetry.dependencies]
 python = "^3.8"
