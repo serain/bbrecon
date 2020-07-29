@@ -4,8 +4,7 @@ from bbrecon import BugBountyRecon, models
 
 
 bb = BugBountyRecon(
-    token=os.environ.get("BBRECON_API_KEY"),
-    base_url="https://api.dev.bugbountysearch.com",
+    token=os.environ.get("BBRECON_KEY"), base_url="https://api.dev.bugbountysearch.com",
 )
 
 
