@@ -132,18 +132,18 @@ def output_json_scopes_table(scopes: List[dict]):
 
 
 def output_narrow_scopes_table(scopes: List[dict]):
-    headers = ["PLATFORM", "SLUG", "TYPE", "VALUE"]
+    headers = ["SLUG", "PLATFORM", "TYPE", "VALUE"]
     data = []
     for scope in scopes:
-        data.append([scope["platform"], scope["slug"], scope["type"], scope["value"]])
+        data.append([scope["slug"], scope["platform"], scope["type"], scope["value"]])
     typer.echo(tabulate(data, headers, tablefmt="plain"))
 
 
 def output_wide_scopes_table(scopes: List[dict]):
-    headers = ["PLATFORM", "SLUG", "TYPE", "VALUE"]
+    headers = ["SLUG", "PLATFORM", "TYPE", "VALUE"]
     data = []
     for scope in scopes:
-        data.append([scope["platform"], scope["slug"], scope["type"], scope["value"]])
+        data.append([scope["slug"], scope["platform"], scope["type"], scope["value"]])
     typer.echo(tabulate(data, headers, tablefmt="plain"))
 
 
