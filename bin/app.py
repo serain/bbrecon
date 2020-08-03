@@ -90,7 +90,6 @@ def output_wide_programs_table(programs: List[Program]):
         "MAX.BOUNTY",
         "SCOPES",
         "TYPES",
-        "URL",
     ]
     data = []
     for program in programs:
@@ -108,7 +107,6 @@ def output_wide_programs_table(programs: List[Program]):
                 f"${program.maximum_bounty}",
                 len(program.in_scope),
                 types,
-                program.program_url,
             ]
         )
     typer.echo(tabulate(data, headers, tablefmt="plain"))
