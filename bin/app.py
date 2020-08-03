@@ -1,4 +1,3 @@
-import os
 import re
 import json
 import typer
@@ -10,22 +9,10 @@ from datetime import datetime, timedelta
 
 from bbrecon import BugBountyRecon, Program, ApiResponseError
 
-if (API_TOKEN := os.environ.get("BBRECON_KEY")) is None:
-    try:
-        with open(PurePath.joinpath(Path.home(), ".bbrecon/token")) as f:
-            API_TOKEN = f.read().strip()
-    except FileNotFoundError:
-        typer.secho(
-            "No BBRECON_KEY in environment, and no key configured in your home path.",
-            fg=typer.colors.YELLOW,
-        )
+import config
 
 
-if (BASE_URL := os.environ.get("BBRECON_URL")) is None:
-    BASE_URL = "https://api.bugbountyrecon.com/"
-
-
-bb = BugBountyRecon(token=API_TOKEN, base_url=BASE_URL)
+bb = BugBountyRecon(token=config.API_TOKEN, base_url=config.BASE_URL)
 
 app = typer.Typer(
     help="""bbrecon
