@@ -8,8 +8,6 @@ from .validation_error import ValidationError
 
 @dataclass
 class HTTPValidationError:
-    """  """
-
     detail: Optional[List[ValidationError]] = None
 
     def to_dict(self) -> Dict[str, Any]:

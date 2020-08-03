@@ -6,34 +6,47 @@ from enum import Enum
 from tabulate import tabulate
 from click_spinner import spinner
 from typing import List, Optional
+from pathlib import Path, PurePath
 from datetime import datetime, timedelta
 
 from bbrecon import BugBountyRecon, Program
 
+if (API_TOKEN := os.environ.get("BBRECON_KEY")) is None:
+    try:
+        with open(PurePath.joinpath(Path.home(), ".bbrecon/token")) as f:
+            API_TOKEN = f.read().strip()
+    except FileNotFoundError:
+        typer.secho(
+            "No BBRECON_KEY in environment, and no key configured in your home path.",
+            fg=typer.colors.YELLOW,
+        )
 
-if (API_KEY := os.environ.get("BBRECON_KEY")) is None:
-    print("No BBRECON_KEY in environment, see '--help'.")
-    exit(1)
 
 if (BASE_URL := os.environ.get("BBRECON_URL")) is None:
     BASE_URL = "https://api.bugbountyrecon.com/"
 
 
-bb = BugBountyRecon(token=API_KEY, base_url=BASE_URL)
+bb = BugBountyRecon(token=API_TOKEN, base_url=BASE_URL)
 
 app = typer.Typer(
     help="""bbrecon
 
 CLI for the Bug Bounty Recon API.
 
-Requires a Bug Bounty Recon API key set in the 'BBRECON_KEY' environment variable.
-Head over to https://bugbountyrecon.com to fetch a key.
+Requires a Bug Bounty Recon API key set in the 'BBRECON_KEY' environment variable or
+configured through the CLI.
 
-Please use https://github.com/bugbountyrecon/bbrecon to report issues.
+Head over to https://bugbountyrecon.com to fetch a free key.
+
+Please use https://github.com/bugbountyrecon/bbrecon/issues to report issues.
 """
+)
+configure = typer.Typer(
+    help="Configure bbrecon by setting credentials in your home directory."
 )
 get = typer.Typer(help="Fetch resources.")
 app.add_typer(get, name="get")
+app.add_typer(configure, name="configure")
 
 
 class InvalidDateInputError(Exception):
@@ -170,6 +183,17 @@ format '%Y-%m-%d' can be supplied. Alternatively, the following keywords are sup
                 created_since=created_since,
             )
     globals()[f"output_{output}_programs_table"](programs)
+
+
+@configure.command("key")
+def key_configure():
+    path = PurePath.joinpath(Path.home(), ".bbrecon")
+    token_path = PurePath.joinpath(path, "token")
+    Path(path).mkdir(parents=True, exist_ok=True)
+    typer.echo("You can get a free API key from https://bugbountyrecon.com/")
+    token = typer.prompt("Enter your API key")
+    with open(token_path, "w+") as f:
+        print(token, file=f)
 
 
 def main():

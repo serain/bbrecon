@@ -6,8 +6,6 @@ from typing import Any, Dict
 
 @dataclass
 class ProgramScope:
-    """  """
-
     type: str
     value: str
 
@@ -20,7 +18,6 @@ class ProgramScope:
     @staticmethod
     def from_dict(d: Dict[str, Any]) -> ProgramScope:
         type = d["type"]
-
         value = d["value"]
 
         return ProgramScope(type=type, value=value)

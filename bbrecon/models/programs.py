@@ -8,8 +8,6 @@ from .program import Program
 
 @dataclass
 class Programs:
-    """  """
-
     data: List[Program]
     next_page: Optional[int] = None
 
