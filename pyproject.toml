@@ -20,7 +20,6 @@ httpx = "^0.13.3"
 typer = {extras = ["all"], version = "^0.3.1"}
 tabulate = "^0.8.7"
 pydantic = "^1.6.1"
-click-spinner = "^0.1.10"
 
 
 [tool.poetry.dev-dependencies]

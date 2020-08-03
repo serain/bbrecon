@@ -4,12 +4,11 @@ import json
 import typer
 from enum import Enum
 from tabulate import tabulate
-from click_spinner import spinner
 from typing import List, Optional
 from pathlib import Path, PurePath
 from datetime import datetime, timedelta
 
-from bbrecon import BugBountyRecon, Program
+from bbrecon import BugBountyRecon, Program, APIException
 
 if (API_TOKEN := os.environ.get("BBRECON_KEY")) is None:
     try:
@@ -169,19 +168,26 @@ format '%Y-%m-%d' can be supplied. Alternatively, the following keywords are sup
             created_since = get_datetime_from_input(created_since)
         except InvalidDateInputError:
             typer.echo(f"Invalid date input '{created_since}', see '--help'.")
+            exit(1)
 
-    with spinner():
+    try:
         if program_slugs:
-            programs = (bb.program(slug) for slug in program_slugs)
+            programs = list(bb.program(slug) for slug in program_slugs)
         else:
-            programs = bb.programs(
-                name=name,
-                types=types,
-                platforms=platforms,
-                exclude_platforms=exclude_platforms,
-                rewards=rewards,
-                created_since=created_since,
+            programs = list(
+                bb.programs(
+                    name=name,
+                    types=types,
+                    platforms=platforms,
+                    exclude_platforms=exclude_platforms,
+                    rewards=rewards,
+                    created_since=created_since,
+                )
             )
+    except APIException as e:
+        typer.echo(str(e))
+        exit()
+
     globals()[f"output_{output}_programs_table"](programs)
 
 

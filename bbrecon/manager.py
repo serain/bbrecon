@@ -4,7 +4,11 @@ from datetime import datetime
 
 from .client import AuthenticatedClient
 from .api.programs import get_programs, get_program
-from .models import Program
+from .models import Program, HTTPValidationError
+
+
+class APIException(Exception):
+    pass
 
 
 class BugBountyRecon:
@@ -16,10 +20,12 @@ class BugBountyRecon:
     def _paginate(self, api_function, **kwargs):
         page = 0
         while page is not None:
-            targets = api_function(client=self.client, page=page, **kwargs)
-            for target in targets.data:
+            response = api_function(client=self.client, page=page, **kwargs)
+            if isinstance(response, HTTPValidationError):
+                raise APIException(response)
+            for target in response.data:
                 yield target
-            page = targets.next_page
+            page = response.next_page
 
     def program(self, slug: str) -> Program:
         return get_program(client=self.client, slug=slug)

@@ -1,6 +1,5 @@
 from typing import Any, Dict, List, Optional, Union, cast
 from datetime import datetime
-from urllib.parse import urljoin
 
 import httpx
 

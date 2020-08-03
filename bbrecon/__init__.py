@@ -1,3 +1,3 @@
 """ A client library for accessing bbrecon """
 from .models import Program
-from .manager import BugBountyRecon
+from .manager import BugBountyRecon, APIException

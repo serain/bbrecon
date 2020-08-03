@@ -83,17 +83,6 @@ version = "7.1.2"
 
 [[package]]
 category = "main"
-description = "Spinner for Click"
-name = "click-spinner"
-optional = false
-python-versions = "*"
-version = "0.1.10"
-
-[package.extras]
-test = ["click", "pytest", "six"]
-
-[[package]]
-category = "main"
 description = "Cross-platform colored terminal text."
 name = "colorama"
 optional = false
@@ -539,7 +528,7 @@ python-versions = "*"
 version = "0.2.5"
 
 [metadata]
-content-hash = "3acd14e01c53c440ff8a7bf67a8f6dd1842d0a2444b9748adca82a81600c764e"
+content-hash = "4288be31c76cf5a9f6a9d89d49173bc91a56930ed8033e7c29975d949998297f"
 lock-version = "1.0"
 python-versions = "^3.8"
 
@@ -575,10 +564,6 @@ chardet = [
 click = [
     {file = "click-7.1.2-py2.py3-none-any.whl", hash = "sha256:dacca89f4bfadd5de3d7489b7c8a566eee0d3676333fbb50030263894c38c0dc"},
     {file = "click-7.1.2.tar.gz", hash = "sha256:d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a"},
-]
-click-spinner = [
-    {file = "click-spinner-0.1.10.tar.gz", hash = "sha256:87eacf9d7298973a25d7615ef57d4782aebf913a532bba4b28a37e366e975daf"},
-    {file = "click_spinner-0.1.10-py2.py3-none-any.whl", hash = "sha256:d1ffcff1fdad9882396367f15fb957bcf7f5c64ab91927dee2127e0d2991ee84"},
 ]
 colorama = [
     {file = "colorama-0.4.3-py2.py3-none-any.whl", hash = "sha256:7d73d2a99753107a36ac6b455ee49046802e59d9d076ef8e47b61499fa29afff"},
