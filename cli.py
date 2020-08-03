@@ -75,7 +75,7 @@ def output_json_programs_table(programs: List[Program]):
 
 
 def output_narrow_programs_table(programs: List[Program]):
-    headers = ["SLUG", "PLATFORM", "REWARDS", "AVG.BOUNTY", "TYPES"]
+    headers = ["SLUG", "PLATFORM", "REWARDS", "MAX.BOUNTY", "TYPES"]
     data = []
     for program in programs:
         rewards = ",".join([reward for reward in program.rewards])
@@ -85,7 +85,7 @@ def output_narrow_programs_table(programs: List[Program]):
                 program.slug,
                 program.platform,
                 rewards,
-                f"${program.average_bounty}",
+                f"${program.maximum_bounty}",
                 types,
             ]
         )
