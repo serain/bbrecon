@@ -139,12 +139,7 @@ def output_narrow_scopes_table(scopes: List[dict]):
     typer.echo(tabulate(data, headers, tablefmt="plain"))
 
 
-def output_wide_scopes_table(scopes: List[dict]):
-    headers = ["SLUG", "PLATFORM", "TYPE", "VALUE"]
-    data = []
-    for scope in scopes:
-        data.append([scope["slug"], scope["platform"], scope["type"], scope["value"]])
-    typer.echo(tabulate(data, headers, tablefmt="plain"))
+output_wide_scopes_table = output_narrow_scopes_table
 
 
 @get.command("programs")
@@ -202,7 +197,7 @@ format '%Y-%m-%d' can be supplied. Alternatively, the following keywords are sup
             created_since = get_datetime_from_input(created_since)
         except InvalidDateInputError:
             typer.echo(f"Invalid date input '{created_since}', see '--help'.")
-            exit(1)
+            raise typer.Exit(1)
 
     try:
         if program_slugs:
@@ -220,7 +215,7 @@ format '%Y-%m-%d' can be supplied. Alternatively, the following keywords are sup
             )
     except ApiResponseError as e:
         typer.echo(e)
-        exit()
+        raise typer.Exit(1)
 
     globals()[f"output_{output}_programs_table"](programs)
 
@@ -255,7 +250,7 @@ def scopes_get(
             programs = list(bb.programs(types=types, platforms=platforms,))
     except ApiResponseError as e:
         typer.echo(e)
-        exit()
+        raise typer.Exit(1)
 
     scopes = []
     for program in programs:
