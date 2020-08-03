@@ -1,18 +1,18 @@
 [tool.poetry]
 name = "bbrecon"
-version = "0.0.2"
+version = "0.0.0.3"
 description = "A client library and CLI for accessing the Bug Bounty Recon API"
 
 authors = []
 
 readme = "README.md"
 packages = [
-    {include = "bbrecon"},
+    {include = "bbrecon"}, {include: "bin"},
 ]
 include = ["CHANGELOG.md", "bbrecon/py.typed"]
 
 [tool.poetry.scripts]
-bbrecon = 'bin.cli:main'
+bbrecon = 'bin.app:main'
 
 [tool.poetry.dependencies]
 python = "^3.8"

@@ -127,6 +127,13 @@ def output_wide_programs_table(programs: List[Program]):
     typer.echo(tabulate(data, headers, tablefmt="plain"))
 
 
+_PROGRAMS_TABLE_OUTPUTS = {
+    OutputFormat.json_: output_json_programs_table,
+    OutputFormat.narrow: output_narrow_programs_table,
+    OutputFormat.wide: output_wide_programs_table,
+}
+
+
 def output_json_scopes_table(scopes: List[dict]):
     typer.echo(json.dumps(scopes, indent=4))
 
@@ -140,6 +147,13 @@ def output_narrow_scopes_table(scopes: List[dict]):
 
 
 output_wide_scopes_table = output_narrow_scopes_table
+
+
+_SCOPES_TABLE_OUTPUTS = {
+    OutputFormat.json_: output_json_scopes_table,
+    OutputFormat.narrow: output_narrow_scopes_table,
+    OutputFormat.wide: output_wide_scopes_table,
+}
 
 
 @get.command("programs")
@@ -217,7 +231,7 @@ format '%Y-%m-%d' can be supplied. Alternatively, the following keywords are sup
         typer.echo(e)
         raise typer.Exit(1)
 
-    globals()[f"output_{output}_programs_table"](programs)
+    _PROGRAMS_TABLE_OUTPUTS[output](programs)
 
 
 @get.command("scopes")
@@ -266,7 +280,7 @@ def scopes_get(
                 }
             )
 
-    globals()[f"output_{output}_scopes_table"](scopes)
+    _SCOPES_TABLE_OUTPUTS[output](scopes)
 
 
 @configure.command("key")
