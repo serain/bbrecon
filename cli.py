@@ -40,9 +40,7 @@ Head over to https://bugbountyrecon.com to fetch a free key.
 Please use https://github.com/bugbountyrecon/bbrecon/issues to report issues.
 """
 )
-configure = typer.Typer(
-    help="Configure bbrecon by setting credentials in your home directory."
-)
+configure = typer.Typer(help="Configure bbrecon.")
 get = typer.Typer(help="Fetch resources.")
 app.add_typer(get, name="get")
 app.add_typer(configure, name="configure")
@@ -77,13 +75,19 @@ def output_json_programs_table(programs: List[Program]):
 
 
 def output_narrow_programs_table(programs: List[Program]):
-    headers = ["SLUG", "PLATFORM", "REWARDS", "AVG.BOUNTY" "TYPES"]
+    headers = ["SLUG", "PLATFORM", "REWARDS", "AVG.BOUNTY", "TYPES"]
     data = []
     for program in programs:
         rewards = ",".join([reward for reward in program.rewards])
         types = ",".join([type_ for type_ in program.types])
         data.append(
-            [program.slug, program.platform, rewards, program.average_bounty, types]
+            [
+                program.slug,
+                program.platform,
+                rewards,
+                f"${program.average_bounty}",
+                types,
+            ]
         )
     typer.echo(tabulate(data, headers, tablefmt="plain"))
 
@@ -99,6 +103,7 @@ def output_wide_programs_table(programs: List[Program]):
         "MAX.BOUNTY",
         "SCOPES",
         "TYPES",
+        "URL",
     ]
     data = []
     for program in programs:
@@ -116,8 +121,29 @@ def output_wide_programs_table(programs: List[Program]):
                 f"${program.maximum_bounty}",
                 len(program.in_scope),
                 types,
+                program.program_url,
             ]
         )
+    typer.echo(tabulate(data, headers, tablefmt="plain"))
+
+
+def output_json_scopes_table(scopes: List[dict]):
+    typer.echo(json.dumps(scopes, indent=4))
+
+
+def output_narrow_scopes_table(scopes: List[dict]):
+    headers = ["PLATFORM", "SLUG", "TYPE", "VALUE"]
+    data = []
+    for scope in scopes:
+        data.append([scope["platform"], scope["slug"], scope["type"], scope["value"]])
+    typer.echo(tabulate(data, headers, tablefmt="plain"))
+
+
+def output_wide_scopes_table(scopes: List[dict]):
+    headers = ["PLATFORM", "SLUG", "TYPE", "VALUE"]
+    data = []
+    for scope in scopes:
+        data.append([scope["platform"], scope["slug"], scope["type"], scope["value"]])
     typer.echo(tabulate(data, headers, tablefmt="plain"))
 
 
@@ -197,6 +223,55 @@ format '%Y-%m-%d' can be supplied. Alternatively, the following keywords are sup
         exit()
 
     globals()[f"output_{output}_programs_table"](programs)
+
+
+@get.command("scopes")
+def scopes_get(
+    program_slugs: Optional[List[str]] = typer.Argument(None),
+    output: OutputFormat = typer.Option(
+        OutputFormat.wide, "--output", "-o", help="Output format."
+    ),
+    types: List[str] = typer.Option(
+        None, "--type", "-t", help="Filter by scope type. Can be used multiple times."
+    ),
+    platforms: List[str] = typer.Option(
+        None,
+        "--platform",
+        "-p",
+        help="Filter by platform. Can be used multiple times.",
+    ),
+):
+    """
+    Display many scopes, in a table or as JSON.
+
+    If a list of slugs is provided as CLI arguments, the command will fetch scopes for
+    the specified programs. Scopes can be narrowed down by type and platform.
+    """
+
+    try:
+        if program_slugs:
+            programs = list(bb.program(slug) for slug in program_slugs)
+        else:
+            programs = list(bb.programs(types=types, platforms=platforms,))
+    except APIException as e:
+        typer.echo(str(e))
+        exit()
+
+    scopes = []
+    for program in programs:
+        for scope in program.in_scope:
+            if types and scope.type not in types:
+                continue
+            scopes.append(
+                {
+                    "type": scope.type,
+                    "value": scope.value,
+                    "slug": program.slug,
+                    "platform": program.platform,
+                }
+            )
+
+    globals()[f"output_{output}_scopes_table"](scopes)
 
 
 @configure.command("key")
