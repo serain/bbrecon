@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 
 from bbrecon import BugBountyRecon, Program, ApiResponseError
 
-import config
+from .utils import config, update
 
 
 bb = BugBountyRecon(token=config.API_TOKEN, base_url=config.BASE_URL)
@@ -273,6 +273,7 @@ def key_configure():
 
 
 def main():
+    update.check()
     app()
 
 
