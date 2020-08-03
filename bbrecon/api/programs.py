@@ -5,7 +5,6 @@ import httpx
 
 from ..client import Client
 from ..errors import ApiResponseError
-from ..models.http_validation_error import HTTPValidationError
 from ..models.programs import Programs
 from ..models.program import Program
 
@@ -20,7 +19,7 @@ def get_programs(
     rewards: Optional[List[str]] = None,
     page: Optional[int] = None,
     created_since: Optional[datetime] = None,
-) -> Union[Programs, HTTPValidationError]:
+) -> Union[Programs]:
     url = "{}/v0b/programs".format(client.base_url)
 
     params: Dict[str, Any] = {}
@@ -43,23 +42,13 @@ def get_programs(
 
     if response.status_code == 200:
         return Programs.from_dict(cast(Dict[str, Any], response.json()))
-    if response.status_code == 422:
-        return HTTPValidationError.from_dict(cast(Dict[str, Any], response.json()))
-    if response.status_code == 401:
-        return HTTPValidationError.from_dict(cast(Dict[str, Any], response.json()))
-    else:
-        raise ApiResponseError(response=response)
+    raise ApiResponseError(code=response.status_code, detail=response.json())
 
 
-def get_program(*, client: Client, slug: str) -> Union[Program, HTTPValidationError]:
+def get_program(*, client: Client, slug: str) -> Union[Program]:
     url = "{}/v0b/programs/{slug}".format(client.base_url, slug=slug)
     response = httpx.get(url=url, headers=client.get_headers())
 
     if response.status_code == 200:
         return Program.from_dict(cast(Dict[str, Any], response.json()))
-    if response.status_code == 422:
-        return HTTPValidationError.from_dict(cast(Dict[str, Any], response.json()))
-    if response.status_code == 401:
-        return HTTPValidationError.from_dict(cast(Dict[str, Any], response.json()))
-    else:
-        raise ApiResponseError(response=response)
+    raise ApiResponseError(code=response.status_code, detail=response.json())

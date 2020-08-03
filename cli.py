@@ -8,7 +8,7 @@ from typing import List, Optional
 from pathlib import Path, PurePath
 from datetime import datetime, timedelta
 
-from bbrecon import BugBountyRecon, Program, APIException
+from bbrecon import BugBountyRecon, Program, ApiResponseError
 
 if (API_TOKEN := os.environ.get("BBRECON_KEY")) is None:
     try:
@@ -218,8 +218,8 @@ format '%Y-%m-%d' can be supplied. Alternatively, the following keywords are sup
                     created_since=created_since,
                 )
             )
-    except APIException as e:
-        typer.echo(str(e))
+    except ApiResponseError as e:
+        typer.echo(e)
         exit()
 
     globals()[f"output_{output}_programs_table"](programs)
@@ -253,8 +253,8 @@ def scopes_get(
             programs = list(bb.program(slug) for slug in program_slugs)
         else:
             programs = list(bb.programs(types=types, platforms=platforms,))
-    except APIException as e:
-        typer.echo(str(e))
+    except ApiResponseError as e:
+        typer.echo(e)
         exit()
 
     scopes = []

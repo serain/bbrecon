@@ -4,11 +4,7 @@ from datetime import datetime
 
 from .client import AuthenticatedClient
 from .api.programs import get_programs, get_program
-from .models import Program, HTTPValidationError
-
-
-class APIException(Exception):
-    pass
+from .models import Program
 
 
 class BugBountyRecon:
@@ -21,8 +17,6 @@ class BugBountyRecon:
         page = 0
         while page is not None:
             response = api_function(client=self.client, page=page, **kwargs)
-            if isinstance(response, HTTPValidationError):
-                raise APIException(response)
             for target in response.data:
                 yield target
             page = response.next_page
