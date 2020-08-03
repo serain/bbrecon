@@ -77,12 +77,14 @@ def output_json_programs_table(programs: List[Program]):
 
 
 def output_narrow_programs_table(programs: List[Program]):
-    headers = ["SLUG", "PLATFORM", "REWARDS", "TYPES"]
+    headers = ["SLUG", "PLATFORM", "REWARDS", "AVG.BOUNTY" "TYPES"]
     data = []
     for program in programs:
         rewards = ",".join([reward for reward in program.rewards])
         types = ",".join([type_ for type_ in program.types])
-        data.append([program.slug, program.platform, rewards, types])
+        data.append(
+            [program.slug, program.platform, rewards, program.average_bounty, types]
+        )
     typer.echo(tabulate(data, headers, tablefmt="plain"))
 
 
@@ -92,6 +94,9 @@ def output_wide_programs_table(programs: List[Program]):
         "PLATFORM",
         "CREATED",
         "REWARDS",
+        "MIN.BOUNTY",
+        "AVG.BOUNTY",
+        "MAX.BOUNTY",
         "SCOPES",
         "TYPES",
     ]
@@ -106,6 +111,9 @@ def output_wide_programs_table(programs: List[Program]):
                 program.platform,
                 created_at,
                 rewards,
+                f"${program.minimum_bounty}",
+                f"${program.average_bounty}",
+                f"${program.maximum_bounty}",
                 len(program.in_scope),
                 types,
             ]
