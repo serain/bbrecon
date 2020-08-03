@@ -18,7 +18,8 @@ def check():
     if installed_version < latest_version:
         typer.secho(
             f"""You are running an old version of bbrecon and things may not work.
-Upgrade with `pip3 install bbrecon=={latest_version}`""",
+Upgrade with `pip3 install bbrecon=={latest_version}`
+""",
             fg=typer.colors.YELLOW,
             err=True,
         )
