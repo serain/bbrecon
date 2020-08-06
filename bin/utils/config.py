@@ -15,4 +15,4 @@ if (API_TOKEN := os.environ.get("BBRECON_KEY")) is None:
 
 
 if (BASE_URL := os.environ.get("BBRECON_URL")) is None:
-    BASE_URL = "https://api.bugbountyrecon.com/"
+    BASE_URL = "https://api.bugbountyrecon.com"
