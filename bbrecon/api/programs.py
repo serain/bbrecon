@@ -20,7 +20,7 @@ def get_programs(
     page: Optional[int] = None,
     created_since: Optional[datetime] = None,
 ) -> Union[Programs]:
-    url = "{}/v0b/programs".format(client.base_url)
+    url = "{}/v0b/programs/public".format(client.base_url)
 
     params: Dict[str, Any] = {}
     if name is not None:
@@ -46,7 +46,7 @@ def get_programs(
 
 
 def get_program(*, client: Client, slug: str) -> Union[Program]:
-    url = "{}/v0b/programs/{slug}".format(client.base_url, slug=slug)
+    url = "{}/v0b/programs/public/{slug}".format(client.base_url, slug=slug)
     response = httpx.get(url=url, headers=client.get_headers())
 
     if response.status_code == 200:
