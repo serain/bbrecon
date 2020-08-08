@@ -2,6 +2,11 @@
   <p align="center">
     <img width="320px" src="https://raw.githubusercontent.com/serain/bbrecon/master/docs/logo_cropped.png">
   </p>
+  <p align="center">
+    <a href="https://gitter.im/dref/Lobby/">
+      <img src="http://badges.gitter.im/serain/bbrecon.svg">
+    </a>
+  </p>
   <br />
 </dl>
 
