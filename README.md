@@ -162,7 +162,12 @@ programs = bb.programs(
 )
 
 for program in programs:
-    print(f"{program.slug} rewards up to {program.maximum_bounty}")
+    print(f"{program.name} rewards up to ${program.maximum_bounty}!")
+    print(f"More information is available at: {program.program_url}")
+
+    for scope in program.in_scope:
+        if scope.type == "desktop":
+            print("Found a desktop app in scope for this program. Cool!")
 ```
 
 ## REST API
