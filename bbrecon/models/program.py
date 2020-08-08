@@ -9,8 +9,8 @@ from .program_scope import ProgramScope
 
 @dataclass
 class Program:
-    program_url: str
-    program_name: str
+    url: str
+    name: str
     platform: str
     rewards: List[str]
     types: List[str]
