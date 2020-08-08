@@ -41,12 +41,18 @@ Only Google SSO is supported at this time.
 
 ```
 $ pip3 install bbrecon
+```
 
+If you intend to use the CLI, you should permanently configure your key:
+
+```
 $ bbrecon configure key
 Enter your API key: YOUR_API_KEY
 ```
 
-## Usage
+You can alternatively set the `BBRECON_KEY` environment variable if you prefer.
+
+## CLI Usage
 
 The following will output all programs released in the last month that have "web" type targets (APIs/web apps):
 
@@ -56,6 +62,22 @@ SLUG                  PLATFORM     CREATED     REWARDS      MIN.BOUNTY    AVG.BO
 cybrary               bugcrowd     2020-07-22  fame         $0            $0            $0                   6  android,ios,web
 expressvpn            bugcrowd     2020-07-14  cash,fame    $150          $1047         $2500               17  android,ios,other,web
 prestashop            yeswehack    2020-07-23  cash         $0            $0            $1000                1  web
+...
+```
+
+Most commands can output JSON to make it easy to work with your scripts. Try `--output json`:
+
+```
+$ bbrecon get programs --output json
+[
+    {
+        "programUrl": "https://bugcrowd.com/optimizely",
+        "programName": "Optimizely",
+        "platform": "bugcrowd",
+        "rewards": [
+            "cash",
+            "fame"
+        ],
 ...
 ```
 
@@ -119,16 +141,3 @@ gojek                                             bugcrowd     2018-03-22  cash,
 smartthings                                       bugcrowd     2018-03-22  fame         $0            $0            $0                   5  android,hardware,ios,web
 ...
 ```
-
-The default output is a `wide` table. If you're working in a small terminal and want a bit less information, you can pass `--output narrow`:
-
-```
-$ bbrecon get programs --type web --since last-month --output narrow                                                                                                                                                                  15:08:41
-SLUG                  PLATFORM     REWARDS      MAX.BOUNTY    TYPES
-cybrary               bugcrowd     fame         $0            android,ios,web
-expressvpn            bugcrowd     cash,fame    $2500         android,ios,other,web
-prestashop            yeswehack    cash         $1000         web
-...
-```
-
-All API programs can return results as
