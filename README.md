@@ -11,13 +11,6 @@ The service is free.
 
 This repository holds the CLI and Python library. Please see [the website](https://bugbountyrecon.com/) for more details.
 
-<dl>
-    <p align="center"><b>
-    Note that there is a 1 hour cache in place.<br />
-    There is no point polling the API at a shorter interval than that.
-    </b></p.>
-</dl>
-
 ## Important Notice
 
 While effort is taken to ensure the results returned by `bbrecon` are reliable and trustworthy, this service and its operators are in no way responsible for what you do with the data provided.
@@ -58,6 +51,10 @@ Enter your API key: YOUR_API_KEY
 ```
 
 You can alternatively set the `BBRECON_KEY` environment variable if you prefer.
+
+## Caching
+
+Please note that there is a 1 hour cache in place on public information returned by the API. As such, there is no point polling the API at a shorter interval than 1 hour.
 
 ## CLI
 
