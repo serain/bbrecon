@@ -1,6 +1,6 @@
 <dl>
   <p align="center">
-    <img src="https://raw.githubusercontent.com/serain/bbrecon/logo.png">
+    <img width="320px" src="https://raw.githubusercontent.com/serain/bbrecon/master/docs/logo.png">
   </p>
 </dl>
 
