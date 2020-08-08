@@ -62,10 +62,10 @@ The following will output all programs released in the last month that have "web
 
 ```
 $ bbrecon get programs --type web --since last-month
-SLUG                  PLATFORM     CREATED     REWARDS      MIN.BOUNTY    AVG.BOUNTY    MAX.BOUNTY      SCOPES  TYPES
-cybrary               bugcrowd     2020-07-22  fame         $0            $0            $0                   6  android,ios,web
-expressvpn            bugcrowd     2020-07-14  cash,fame    $150          $1047         $2500               17  android,ios,other,web
-prestashop            yeswehack    2020-07-23  cash         $0            $0            $1000                1  web
+SLUG         PLATFORM     CREATED     REWARDS      MIN.BOUNTY    AVG.BOUNTY    MAX.BOUNTY      SCOPES  TYPES
+cybrary      bugcrowd     2020-07-22  fame         $0            $0            $0                   6  android,ios,web
+expressvpn   bugcrowd     2020-07-14  cash,fame    $150          $1047         $2500               17  android,ios,other,web
+prestashop   yeswehack    2020-07-23  cash         $0            $0            $1000                1  web
 ...
 ```
 
@@ -139,10 +139,10 @@ Note that some filters are lists, and can be used multiple times! If you wanted 
 
 ```
 $ bbrecon get programs --type android --type ios
-SLUG                                              PLATFORM     CREATED     REWARDS      MIN.BOUNTY    AVG.BOUNTY    MAX.BOUNTY      SCOPES  TYPES
-square                                            bugcrowd     2018-03-22  cash,fame    $300          $492          $5000                4  android,ios,other,web
-gojek                                             bugcrowd     2018-03-22  cash,fame    $200          $618          $5000                4  android,ios,web
-smartthings                                       bugcrowd     2018-03-22  fame         $0            $0            $0                   5  android,hardware,ios,web
+SLUG                       PLATFORM     CREATED     REWARDS      MIN.BOUNTY    AVG.BOUNTY    MAX.BOUNTY  SCOPES  TYPES
+square                     bugcrowd     2018-03-22  cash,fame    $300          $492          $5000            4  android,ios,other,web
+gojek                      bugcrowd     2018-03-22  cash,fame    $200          $618          $5000            4  android,ios,web
+smartthings                bugcrowd     2018-03-22  fame         $0            $0            $0               5  android,hardware,ios,web
 ...
 ```
 
