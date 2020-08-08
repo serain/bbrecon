@@ -36,6 +36,12 @@ Double check your scopes and ensure you stay within safe harbors.
 
 `bbrecon` is in a gradual **Beta** release phase; major features are released every few weeks to get feedback and fix kinks. You can sign up and start using it, but be aware that **breaking changes may be deployed without notice**. While the service and infrastructure is designed to scale, it is **not currently configured to serve a large global audience**. This will change, but for now YMMV.
 
+## Help
+
+Please report bugs with [GitHub issues](https://github.com/serain/bbrecon/issues).
+
+Use the [Gitter chat](https://gitter.im/bbrecon/community) for support or enquiring about service availability during beta.
+
 ## Getting Started
 
 ### API key
