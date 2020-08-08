@@ -52,10 +52,6 @@ Enter your API key: YOUR_API_KEY
 
 You can alternatively set the `BBRECON_KEY` environment variable if you prefer.
 
-## Caching
-
-Please note that there is a 1 hour cache in place on public information returned by the API. As such, there is no point polling the API at a shorter interval than 1 hour.
-
 ## CLI
 
 The following will output all programs released in the last month that have "web" type targets (APIs/web apps):
