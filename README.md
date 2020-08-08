@@ -159,7 +159,7 @@ programs = bb.programs(
 
 for program in programs:
     print(f"{program.name} rewards up to ${program.maximum_bounty}!")
-    print(f"More information is available at: {program.program_url}")
+    print(f"More information is available at: {program.url}")
 
     for scope in program.in_scope:
         if scope.type == "desktop":
