@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bbrecon"
-version = "0.0.12"
+version = "0.0.13"
 description = "A client library and CLI for accessing the Bug Bounty Recon API"
 
 authors = []
