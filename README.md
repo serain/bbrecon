@@ -25,6 +25,10 @@ Double check your scopes and ensure you stay within safe harbors.
 - **Notifications** - webhook alerts when programs are created, updated or domains discovered (September 2020)
 - **Endpoints** - all HTTP and non-HTTP endpoints in scope across all programs (October 2020)
 
+## Status
+
+`bbrecon` is in a gradual Beta release phase; major features are released every few weeks to get feedback and fix kinks. You can sign up and start using it, but be aware that **breaking changes may be deployed without notice**. While the service and infrastructure is designed to scale, it is **not currently configured to serve a large global audience**. This will change, but for now YMMV.
+
 ## Getting Started
 
 ### API key
