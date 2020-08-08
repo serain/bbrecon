@@ -7,7 +7,7 @@
 
 Bug Bounty Recon (`bbrecon`) is Recon-as-a-Service for bug bounty hunters and security researchers. The API aims to provide a continuously up-to-date map of the "safe harbor" attack surface of the Internet, excluding out-of-scope targets.
 
-It comes with a beautiful ergonomic CLI and Python library.
+It comes with an ergonomic CLI and Python library.
 
 The service is free.
 
