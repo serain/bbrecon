@@ -41,6 +41,8 @@ Only Google SSO is supported at this time.
 
 ### Installation
 
+`bbrecon` requires Python >= 3.8
+
 ```
 $ pip3 install bbrecon
 ```
