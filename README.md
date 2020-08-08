@@ -75,8 +75,8 @@ Most commands can output JSON to make it easy to work with your scripts. Try `--
 $ bbrecon get programs --output json
 [
     {
-        "programUrl": "https://bugcrowd.com/optimizely",
-        "programName": "Optimizely",
+        "url": "https://bugcrowd.com/optimizely",
+        "name": "Optimizely",
         "platform": "bugcrowd",
         "rewards": [
             "cash",
