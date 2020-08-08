@@ -39,8 +39,8 @@ class Program:
             out_scope.append(out_scope_item)
 
         return {
-            "programUrl": self.program_url,
-            "programName": self.program_name,
+            "url": self.url,
+            "name": self.name,
             "platform": self.platform,
             "rewards": self.rewards,
             "types": self.types,
@@ -69,8 +69,8 @@ class Program:
             out_scope.append(out_scope_item)
 
         return Program(
-            program_url=d["programUrl"],
-            program_name=d["programName"],
+            url=d["url"],
+            name=d["name"],
             platform=d["platform"],
             rewards=d["rewards"],
             types=d["types"],
