@@ -80,6 +80,17 @@ prestashop   yeswehack    2020-07-23  cash         $0            $0            $
 ...
 ```
 
+To get scopes for specific programs, use `get scopes`:
+
+```
+$ bbrecon get scopes rockset codefi-bbp
+SLUG        PLATFORM    TYPE    VALUE
+rockset     hackerone   web     console.rockset.com
+rockset     hackerone   web     docs.rockset.com
+rockset     hackerone   web     api.rs2.usw2.rockset.com
+codefi-bbp  hackerone   web     activate.codefi.network
+```
+
 Most commands can output JSON to make it easy to work with your scripts. Try `--output json`:
 
 ```
@@ -103,17 +114,6 @@ $ bbrecon get programs twago optimizely
 SLUG        PLATFORM    CREATED     REWARDS    MIN.BOUNTY    AVG.BOUNTY    MAX.BOUNTY      SCOPES  TYPES
 twago       intigriti   2020-04-09             $0            $0            $0                   5  web
 optimizely  bugcrowd    2018-03-22  cash,fame  $0            $750          $5000                6  web
-```
-
-To get scopes for specific programs, use `get scopes`:
-
-```
-$ bbrecon get scopes rockset codefi-bbp
-SLUG        PLATFORM    TYPE    VALUE
-rockset     hackerone   web     console.rockset.com
-rockset     hackerone   web     docs.rockset.com
-rockset     hackerone   web     api.rs2.usw2.rockset.com
-codefi-bbp  hackerone   web     activate.codefi.network
 ```
 
 Use `--help` to get a list of filters for each command:
