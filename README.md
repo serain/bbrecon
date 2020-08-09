@@ -50,11 +50,12 @@ Only Google SSO is supported at this time.
 
 ### Installation
 
-`bbrecon` requires Python >= 3.8
-
 ```
 $ pip3 install bbrecon
 ```
+
+> `bbrecon` requires Python >= 3.8 - if `pip` tells you it can't find `bbrecon` it's probably because `pip` is using another Python version. Check this with `pip3 --version`. 
+
 
 If you intend to use the CLI, you should permanently configure your key:
 
