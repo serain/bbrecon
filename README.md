@@ -2,14 +2,17 @@
   <p align="center">
     <img width="320px" src="https://raw.githubusercontent.com/serain/bbrecon/master/docs/logo_cropped.png">
   </p>
+  <p align="center">
+    <a href="https://gitter.im/bbrecon/community">
+      <img src="http://badges.gitter.im/serain/bbrecon.svg">
+    </a>
+  </p>
   <br />
 </dl>
 
-Bug Bounty Recon (`bbrecon`) is Recon-as-a-Service for bug bounty hunters and security researchers. The API aims to provide a continuously up-to-date map of the "safe harbor" attack surface of the Internet, excluding out-of-scope targets.
+Bug Bounty Recon (`bbrecon`) is a free Recon-as-a-Service for bug bounty hunters and security researchers. The API aims to provide a continuously up-to-date map of the Internet "safe harbor" attack surface, excluding out-of-scope targets.
 
-It comes with a beautiful ergonomic CLI and Python library.
-
-The service is free.
+It comes with an ergonomic CLI and Python library.
 
 This repository holds the CLI and Python library. Please see [the website](https://bugbountyrecon.com/) for more details.
 
@@ -31,6 +34,12 @@ Double check your scopes and ensure you stay within safe harbors.
 
 `bbrecon` is in a gradual **Beta** release phase; major features are released every few weeks to get feedback and fix kinks. You can sign up and start using it, but be aware that **breaking changes may be deployed without notice**. While the service and infrastructure is designed to scale, it is **not currently configured to serve a large global audience**. This will change, but for now YMMV.
 
+## Help
+
+Please report bugs with [GitHub issues](https://github.com/serain/bbrecon/issues).
+
+Use the [Gitter chat](https://gitter.im/bbrecon/community) for support or enquiring about service availability during beta.
+
 ## Getting Started
 
 ### API key
@@ -44,6 +53,9 @@ Only Google SSO is supported at this time.
 ```
 $ pip3 install bbrecon
 ```
+
+> `bbrecon` requires Python >= 3.8 - if `pip` tells you it can't find `bbrecon` it's probably because `pip` is using another Python version. Check this with `pip3 --version`. 
+
 
 If you intend to use the CLI, you should permanently configure your key:
 
@@ -60,11 +72,22 @@ The following will output all programs released in the last month that have "web
 
 ```
 $ bbrecon get programs --type web --since last-month
-SLUG                  PLATFORM     CREATED     REWARDS      MIN.BOUNTY    AVG.BOUNTY    MAX.BOUNTY      SCOPES  TYPES
-cybrary               bugcrowd     2020-07-22  fame         $0            $0            $0                   6  android,ios,web
-expressvpn            bugcrowd     2020-07-14  cash,fame    $150          $1047         $2500               17  android,ios,other,web
-prestashop            yeswehack    2020-07-23  cash         $0            $0            $1000                1  web
+SLUG         PLATFORM     CREATED     REWARDS      MIN.BOUNTY    AVG.BOUNTY    MAX.BOUNTY      SCOPES  TYPES
+cybrary      bugcrowd     2020-07-22  fame         $0            $0            $0                   6  android,ios,web
+expressvpn   bugcrowd     2020-07-14  cash,fame    $150          $1047         $2500               17  android,ios,other,web
+prestashop   yeswehack    2020-07-23  cash         $0            $0            $1000                1  web
 ...
+```
+
+To get scopes for specific programs, use `get scopes`:
+
+```
+$ bbrecon get scopes rockset codefi-bbp
+SLUG        PLATFORM    TYPE    VALUE
+rockset     hackerone   web     console.rockset.com
+rockset     hackerone   web     docs.rockset.com
+rockset     hackerone   web     api.rs2.usw2.rockset.com
+codefi-bbp  hackerone   web     activate.codefi.network
 ```
 
 Most commands can output JSON to make it easy to work with your scripts. Try `--output json`:
@@ -90,17 +113,6 @@ $ bbrecon get programs twago optimizely
 SLUG        PLATFORM    CREATED     REWARDS    MIN.BOUNTY    AVG.BOUNTY    MAX.BOUNTY      SCOPES  TYPES
 twago       intigriti   2020-04-09             $0            $0            $0                   5  web
 optimizely  bugcrowd    2018-03-22  cash,fame  $0            $750          $5000                6  web
-```
-
-To get scopes for specific programs, use `get scopes`:
-
-```
-$ bbrecon get scopes rockset codefi-bbp
-SLUG        PLATFORM    TYPE    VALUE
-rockset     hackerone   web     console.rockset.com
-rockset     hackerone   web     docs.rockset.com
-rockset     hackerone   web     api.rs2.usw2.rockset.com
-codefi-bbp  hackerone   web     activate.codefi.network
 ```
 
 Use `--help` to get a list of filters for each command:
@@ -137,10 +149,10 @@ Note that some filters are lists, and can be used multiple times! If you wanted 
 
 ```
 $ bbrecon get programs --type android --type ios
-SLUG                                              PLATFORM     CREATED     REWARDS      MIN.BOUNTY    AVG.BOUNTY    MAX.BOUNTY      SCOPES  TYPES
-square                                            bugcrowd     2018-03-22  cash,fame    $300          $492          $5000                4  android,ios,other,web
-gojek                                             bugcrowd     2018-03-22  cash,fame    $200          $618          $5000                4  android,ios,web
-smartthings                                       bugcrowd     2018-03-22  fame         $0            $0            $0                   5  android,hardware,ios,web
+SLUG           PLATFORM     CREATED     REWARDS      MIN.BOUNTY    AVG.BOUNTY    MAX.BOUNTY  SCOPES  TYPES
+square         bugcrowd     2018-03-22  cash,fame    $300          $492          $5000            4  android,ios,other,web
+gojek          bugcrowd     2018-03-22  cash,fame    $200          $618          $5000            4  android,ios,web
+smartthings    bugcrowd     2018-03-22  fame         $0            $0            $0               5  android,hardware,ios,web
 ...
 ```
 
