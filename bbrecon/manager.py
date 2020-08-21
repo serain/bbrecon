@@ -4,7 +4,8 @@ from datetime import datetime
 
 from .client import AuthenticatedClient
 from .api.programs import get_programs, get_program
-from .models import Program
+from .api.domains import get_domains
+from .models import Program, Domain
 
 
 class BugBountyRecon:
@@ -44,3 +45,9 @@ class BugBountyRecon:
             created_since=created_since,
         ):
             yield program
+
+    def domains(
+        self, *, programs: Optional[List[str]] = None
+    ) -> Generator[Domain, None, None]:
+        for domain in self._paginate(get_domains, programs=programs):
+            yield domain
