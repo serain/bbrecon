@@ -4,7 +4,7 @@ from bbrecon import BugBountyRecon, models
 
 
 bb = BugBountyRecon(
-    token=os.environ.get("BBRECON_KEY"), base_url="https://api.dev.bugbountysearch.com",
+    token=os.environ.get("BBRECON_KEY"), base_url="https://api.bugbountyrecon.com",
 )
 
 
@@ -12,4 +12,4 @@ def test_get_programs():
     programs = bb.programs()
     program = next(programs)
     assert isinstance(program, models.Program)
-    assert validators.url(program.program_url)
+    assert validators.url(program.url)
