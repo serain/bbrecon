@@ -7,7 +7,7 @@ from typing import List, Optional
 from pathlib import Path, PurePath
 from datetime import datetime, timedelta
 
-from bbrecon import BugBountyRecon, Program, ApiResponseError
+from bbrecon import BugBountyRecon, Program, ApiResponseError, Domain
 
 from .utils import config, update
 
@@ -143,6 +143,28 @@ _SCOPES_TABLE_OUTPUTS = {
 }
 
 
+def output_json_domains_table(domains: List[Domain]):
+    typer.echo(json.dumps([domain.to_dict() for domain in domains], indent=4))
+
+
+def output_narrow_domains_table(domains: List[Domain]):
+    headers = ["SLUG", "DOMAIN"]
+    data = []
+    for domain in domains:
+        data.append([domain.program, domain.domain])
+    typer.echo(tabulate(data, headers, tablefmt="plain"))
+
+
+output_wide_domains_table = output_narrow_domains_table
+
+
+_DOMAINS_TABLE_OUTPUTS = {
+    OutputFormat.json_: output_json_domains_table,
+    OutputFormat.narrow: output_narrow_domains_table,
+    OutputFormat.wide: output_wide_domains_table,
+}
+
+
 @get.command("programs")
 def programs_get(
     program_slugs: Optional[List[str]] = typer.Argument(None),
@@ -268,6 +290,29 @@ def scopes_get(
             )
 
     _SCOPES_TABLE_OUTPUTS[output](scopes)
+
+
+@get.command("domains")
+def domains_get(
+    program_slugs: List[str] = typer.Argument(None),
+    output: OutputFormat = typer.Option(
+        OutputFormat.wide, "--output", "-o", help="Output format."
+    ),
+):
+    """
+    Display many domains, in a table or as JSON.
+
+    If a list of slugs is provided as CLI arguments, the command will fetch domains for
+    the specified programs.
+    """
+
+    try:
+        domains = list(bb.domains(programs=program_slugs))
+    except ApiResponseError as e:
+        typer.echo(e)
+        raise typer.Exit(1)
+
+    _DOMAINS_TABLE_OUTPUTS[output](domains)
 
 
 @configure.command("key")
