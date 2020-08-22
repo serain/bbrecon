@@ -139,10 +139,11 @@ def output_json_domains_table(domains: List[Domain]):
 
 
 def output_narrow_domains_table(domains: List[Domain]):
-    headers = ["SLUG", "DOMAIN"]
+    headers = ["SLUG", "DOMAIN", "CREATED"]
     data = []
     for domain in domains:
-        data.append([domain.program, domain.domain])
+        created_at = domain.created_at.strftime("%Y-%m-%d")
+        data.append([domain.program, domain.domain, created_at])
     typer.echo(tabulate(data, headers, tablefmt="plain"))
 
 
@@ -282,6 +283,17 @@ def domains_get(
     output: OutputFormat = typer.Option(
         OutputFormat.wide, "--output", "-o", help="Output format."
     ),
+    created_since: str = typer.Option(
+        None,
+        "--since",
+        "-s",
+        help="""
+Filter for domains created after a certain date. A specific date in the
+format '%Y-%m-%d' can be supplied. Alternatively, the following keywords are supported:
+'yesterday', 'last-week', 'last-month', 'last-year' as well as 'last-X-days'
+(where 'X' is an integer).
+    """,
+    ),
 ):
     """
     Display many domains, in a table or as JSON.
@@ -290,8 +302,15 @@ def domains_get(
     the specified programs.
     """
 
+    if created_since:
+        try:
+            created_since = get_datetime_from_input(created_since)
+        except InvalidDateInputError:
+            typer.echo(f"Invalid date input '{created_since}', see '--help'.")
+            exit(1)
+
     try:
-        domains = list(bb.domains(programs=program_slugs))
+        domains = list(bb.domains(programs=program_slugs, created_since=created_since))
     except ApiResponseError as e:
         typer.echo(e)
         exit()
