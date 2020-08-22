@@ -47,7 +47,12 @@ class BugBountyRecon:
             yield program
 
     def domains(
-        self, *, programs: Optional[List[str]] = None
+        self,
+        *,
+        programs: Optional[List[str]] = None,
+        created_since: Optional[datetime] = None,
     ) -> Generator[Domain, None, None]:
-        for domain in self._paginate(get_domains, programs=programs):
+        for domain in self._paginate(
+            get_domains, programs=programs, created_since=created_since
+        ):
             yield domain
