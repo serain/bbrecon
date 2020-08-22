@@ -302,6 +302,13 @@ format '%Y-%m-%d' can be supplied. Alternatively, the following keywords are sup
     the specified programs.
     """
 
+    if not created_since and not program_slugs:
+        typer.echo(
+            "You can't query all domains like this. "
+            "Specify program slugs or use `--since`."
+        )
+        exit(1)
+
     if created_since:
         try:
             created_since = get_datetime_from_input(created_since)
