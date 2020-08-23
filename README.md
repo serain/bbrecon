@@ -93,11 +93,11 @@ To get domains for specific programs, use `get domains`:
 
 ```
 $ bbrecon get domains dropcontact rebellion-defense
-SLUG               DOMAIN                                        CREATED
-dropcontact        www.dropcontact.io                            2020-08-23
-rebellion-defense  mooch.rip                                     2020-08-23
-rebellion-defense  www.rebelliondefense.com                      2020-08-23
-rebellion-defense  rebelliondefense.com                          2020-08-23
+SLUG               DOMAIN                    CREATED
+dropcontact        www.dropcontact.io        2020-08-23
+rebellion-defense  mooch.rip                 2020-08-23
+rebellion-defense  www.rebelliondefense.com  2020-08-23
+rebellion-defense  rebelliondefense.com      2020-08-23
 ...
 ```
 
