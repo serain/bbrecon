@@ -6,6 +6,7 @@ from .client import AuthenticatedClient
 from .api.programs import get_programs, get_program
 from .api.domains import get_domains
 from .models import Program, Domain
+from .utils import paginate
 
 
 class BugBountyRecon:
@@ -13,14 +14,6 @@ class BugBountyRecon:
         self, token: str, *, base_url: HttpUrl = "https://api.bugbountyrecon.com"
     ):
         self.client = AuthenticatedClient(base_url=base_url, token=token)
-
-    def _paginate(self, api_function, **kwargs):
-        page = 0
-        while page is not None:
-            response = api_function(client=self.client, page=page, **kwargs)
-            for target in response.data:
-                yield target
-            page = response.next_page
 
     def program(self, slug: str) -> Program:
         return get_program(client=self.client, slug=slug)
@@ -35,7 +28,8 @@ class BugBountyRecon:
         rewards: Optional[List[str]] = None,
         created_since: Optional[datetime] = None,
     ) -> Generator[Program, None, None]:
-        for program in self._paginate(
+        for program in paginate(
+            self.client,
             get_programs,
             name=name,
             types=types,
@@ -52,7 +46,7 @@ class BugBountyRecon:
         programs: Optional[List[str]] = None,
         created_since: Optional[datetime] = None,
     ) -> Generator[Domain, None, None]:
-        for domain in self._paginate(
-            get_domains, programs=programs, created_since=created_since
+        for domain in paginate(
+            self.client, get_domains, programs=programs, created_since=created_since
         ):
             yield domain
