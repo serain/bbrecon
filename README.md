@@ -25,7 +25,7 @@ Double check your scopes and ensure you stay within safe harbors.
 ## Features
 
 - **Public Programs** - public bug bounty programs indexed and searchable with filters (live)
-- **Domains** - all domains in scope across all programs (August 2020)
+- **Domains** - domains in scope across programs (live)
 - **Private Programs** - support for private programs (September 2020)
 - **Notifications** - webhook alerts when programs are created, updated or domains discovered (September 2020)
 - **Endpoints** - all HTTP and non-HTTP endpoints in scope across all programs (October 2020)
@@ -54,8 +54,7 @@ Only Google SSO is supported at this time.
 $ pip3 install bbrecon
 ```
 
-> `bbrecon` requires Python >= 3.8 - if `pip` tells you it can't find `bbrecon` it's probably because `pip` is using another Python version. Check this with `pip3 --version`. 
-
+> `bbrecon` requires Python >= 3.8 - if `pip` tells you it can't find `bbrecon` it's probably because `pip` is using another Python version. Check this with `pip3 --version`.
 
 If you intend to use the CLI, you should permanently configure your key:
 
@@ -88,6 +87,18 @@ rockset     hackerone   web     console.rockset.com
 rockset     hackerone   web     docs.rockset.com
 rockset     hackerone   web     api.rs2.usw2.rockset.com
 codefi-bbp  hackerone   web     activate.codefi.network
+```
+
+To get domains for specific programs, use `get domains`:
+
+```
+$ bbrecon get domains dropcontact rebellion-defense                                            13:34:36
+SLUG               DOMAIN                                        CREATED
+dropcontact        www.dropcontact.io                            2020-08-23
+rebellion-defense  mooch.rip                                     2020-08-23
+rebellion-defense  www.rebelliondefense.com                      2020-08-23
+rebellion-defense  rebelliondefense.com                          2020-08-23
+...
 ```
 
 Most commands can output JSON to make it easy to work with your scripts. Try `--output json`:
