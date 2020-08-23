@@ -92,7 +92,7 @@ codefi-bbp  hackerone   web     activate.codefi.network
 To get domains for specific programs, use `get domains`:
 
 ```
-$ bbrecon get domains dropcontact rebellion-defense                                            13:34:36
+$ bbrecon get domains dropcontact rebellion-defense
 SLUG               DOMAIN                                        CREATED
 dropcontact        www.dropcontact.io                            2020-08-23
 rebellion-defense  mooch.rip                                     2020-08-23
