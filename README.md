@@ -174,7 +174,7 @@ You are invited to check out this repo's codebase for more details, but to get s
 ```python3
 from bbrecon import BugBountyRecon
 
-bb = BugBountyRecon(token=API_TOKEN)
+bb = BugBountyRecon(token="API_KEY")
 
 programs = bb.programs(
     types=["web", "ios"],
@@ -189,6 +189,11 @@ for program in programs:
     for scope in program.in_scope:
         if scope.type == "desktop":
             print("Found a desktop app in scope for this program. Cool!")
+
+    domains = list(bb.domains(programs=[program.slug]))
+    print("Here are some domains for this program:")
+    for domain in domains[:3]:
+        print(domain.name)
 ```
 
 ## REST API
