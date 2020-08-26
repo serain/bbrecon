@@ -7,13 +7,13 @@ from typing import Any, Dict
 
 @dataclass
 class Domain:
-    domain: str
+    name: str
     program: str
     created_at: str
 
     def to_dict(self) -> Dict[str, Any]:
         return {
-            "domain": self.domain,
+            "name": self.name,
             "program": self.program,
             "createdAt": self.created_at.isoformat(),
         }
@@ -21,7 +21,7 @@ class Domain:
     @staticmethod
     def from_dict(d: Dict[str, Any]) -> Domain:
         return Domain(
-            domain=d["domain"],
+            name=d["name"],
             program=d["program"],
             created_at=datetime.strptime(d["createdAt"], "%Y-%m-%dT%H:%M:%SZ"),
         )

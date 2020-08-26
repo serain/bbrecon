@@ -143,7 +143,7 @@ def output_narrow_domains_table(domains: List[Domain]):
     data = []
     for domain in domains:
         created_at = domain.created_at.strftime("%Y-%m-%d")
-        data.append([domain.program, domain.domain, created_at])
+        data.append([domain.program, domain.name, created_at])
     typer.echo(tabulate(data, headers, tablefmt="plain"))
 
 
