@@ -147,7 +147,26 @@ def output_narrow_domains_table(domains: List[Domain]):
     typer.echo(tabulate(data, headers, tablefmt="plain"))
 
 
-output_wide_domains_table = output_narrow_domains_table
+def output_json_alerts_table(alerts: List[Domain]):
+    typer.echo(json.dumps([alert.to_dict() for alert in alerts], indent=4))
+
+
+def output_narrow_alerts_table(alerts: List[Domain]):
+    headers = ["ID", "TYPE", "TARGET", "MEDIUM"]
+    data = []
+    for alert in alerts:
+        data.append([alert.id, alert.type, alert.target, alert.medium])
+    typer.echo(tabulate(data, headers, tablefmt="plain"))
+
+
+def output_wide_alerts_table(alerts: List[Domain]):
+    headers = ["ID", "TYPE", "TARGET", "MEDIUM", "DESTINATION"]
+    data = []
+    for alert in alerts:
+        data.append(
+            [alert.id, alert.type, alert.target, alert.medium, alert.destination]
+        )
+    typer.echo(tabulate(data, headers, tablefmt="plain"))
 
 
 @get.command("programs")
@@ -323,6 +342,25 @@ format '%Y-%m-%d' can be supplied. Alternatively, the following keywords are sup
         exit()
 
     globals()[f"output_{output}_domains_table"](domains)
+
+
+@get.command("alerts")
+def alerts_get(
+    output: OutputFormat = typer.Option(
+        OutputFormat.wide, "--output", "-o", help="Output format."
+    ),
+):
+    """
+    Display many alerts, in a table or as JSON.
+    """
+
+    try:
+        alerts = list(bb.alerts())
+    except ApiResponseError as e:
+        typer.echo(e)
+        exit()
+
+    globals()[f"output_{output}_alerts_table"](alerts)
 
 
 @configure.command("key")
