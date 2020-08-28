@@ -370,6 +370,7 @@ format '%Y-%m-%d' can be supplied. Alternatively, the following keywords are sup
 
 @get.command("alerts")
 def alerts_get(
+    alert_ids: Optional[List[str]] = typer.Argument(None),
     output: OutputFormat = typer.Option(
         OutputFormat.wide, "--output", "-o", help="Output format."
     ),
@@ -379,7 +380,10 @@ def alerts_get(
     """
 
     try:
-        alerts = list(bb.alerts())
+        if alert_ids:
+            alerts = list(bb.alert(id) for id in alert_ids)
+        else:
+            alerts = list(bb.alerts())
     except ApiResponseError as e:
         typer.echo(e)
         raise typer.Exit(1)
