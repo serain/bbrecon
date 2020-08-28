@@ -14,8 +14,6 @@ Bug Bounty Recon (`bbrecon`) is a free Recon-as-a-Service for bug bounty hunters
 
 It comes with an ergonomic CLI and Python library.
 
-This repository holds the CLI and Python library. Please see [the website](https://bugbountyrecon.com/) for more details.
-
 ## Important Notice
 
 While effort is taken to ensure the results returned by `bbrecon` are reliable and trustworthy, this service and its operators are in no way responsible for what you do with the data provided.
