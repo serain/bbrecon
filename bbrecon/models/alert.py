@@ -7,7 +7,7 @@ from typing import Any, Dict, Union
 
 @dataclass
 class Alert:
-    type: str
+    resource: str
     target: Union[str, None]
     medium: str
     destination: str
@@ -16,7 +16,7 @@ class Alert:
 
     def to_dict(self) -> Dict[str, Any]:
         return {
-            "type": self.type,
+            "resource": self.resource,
             "target": self.target,
             "medium": self.medium,
             "destination": self.destination,
@@ -27,7 +27,7 @@ class Alert:
     @staticmethod
     def from_dict(d: Dict[str, Any]) -> Alert:
         return Alert(
-            type=d["type"],
+            resource=d["resource"],
             target=d["target"],
             created_at=datetime.strptime(d["createdAt"], "%Y-%m-%dT%H:%M:%SZ"),
             medium=d["medium"],
