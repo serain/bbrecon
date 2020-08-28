@@ -410,7 +410,9 @@ Target to monitor. Use '*' for all. Must be '*' for 'programs' resource.""",
     ),
 ):
     """
-    Create an alert.
+    Create an alert to monitor on new resources, or changes to resources.
+
+    Currently only 'programs' is supported.
     """
 
     try:
