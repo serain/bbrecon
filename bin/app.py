@@ -30,9 +30,11 @@ Please use https://github.com/bugbountyrecon/bbrecon/issues to report issues.
 configure = typer.Typer(help="Configure bbrecon.")
 get = typer.Typer(help="Fetch resources.")
 delete = typer.Typer(help="Delete resources.")
+create = typer.Typer(help="Create resources.")
 app.add_typer(get, name="get")
 app.add_typer(delete, name="delete")
 app.add_typer(configure, name="configure")
+app.add_typer(create, name="create")
 
 
 class InvalidDateInputError(Exception):
@@ -379,6 +381,40 @@ def alerts_delete(alert_ids: Optional[List[str]] = typer.Argument(None)):
         for id in alert_ids:
             bb.delete_alert(id=id)
             typer.echo(f"Successfully deleted alert '{id}'.")
+    except ApiResponseError as e:
+        typer.echo(e)
+        exit()
+
+
+@create.command("alerts")
+def alerts_create(
+    type: str = typer.Option(
+        ..., "--type", help="Type of alert. Currently supports 'programs'.",
+    ),
+    target: str = typer.Option(
+        ...,
+        "--target",
+        help="""
+        Target to monitor. Use '*' for all. Must be '*' for 'programs' resource.""",
+    ),
+    medium: str = typer.Option(
+        ...,
+        "--medium",
+        help="Medium used to send alerts. Must be 'slack' or 'discord'.",
+    ),
+    destination: str = typer.Option(
+        ..., "--destination", help="Destination webhook URL."
+    ),
+):
+    """
+    Create an alert.
+    """
+
+    try:
+        alert = bb.create_alert(
+            type=type, target=target, medium=medium, destination=destination
+        )
+        typer.echo(f"Successfully deleted alert '{alert.id}'.")
     except ApiResponseError as e:
         typer.echo(e)
         exit()
