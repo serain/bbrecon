@@ -156,19 +156,19 @@ def output_json_alerts_table(alerts: List[Domain]):
 
 
 def output_narrow_alerts_table(alerts: List[Domain]):
-    headers = ["ID", "TYPE", "TARGET", "MEDIUM"]
+    headers = ["ID", "RESOURCE", "TARGET", "MEDIUM"]
     data = []
     for alert in alerts:
-        data.append([alert.id, alert.type, alert.target, alert.medium])
+        data.append([alert.id, alert.resource, alert.target, alert.medium])
     typer.echo(tabulate(data, headers, tablefmt="plain"))
 
 
 def output_wide_alerts_table(alerts: List[Domain]):
-    headers = ["ID", "TYPE", "TARGET", "MEDIUM", "DESTINATION"]
+    headers = ["ID", "RESOURCE", "TARGET", "MEDIUM", "DESTINATION"]
     data = []
     for alert in alerts:
         data.append(
-            [alert.id, alert.type, alert.target, alert.medium, alert.destination]
+            [alert.id, alert.resource, alert.target, alert.medium, alert.destination,]
         )
     typer.echo(tabulate(data, headers, tablefmt="plain"))
 
@@ -388,8 +388,8 @@ def alerts_delete(alert_ids: Optional[List[str]] = typer.Argument(None)):
 
 @create.command("alerts")
 def alerts_create(
-    type: str = typer.Option(
-        ..., "--type", help="Type of alert. Currently supports 'programs'.",
+    resource: str = typer.Option(
+        ..., "--resource", help="Resource to monitor. Currently supports 'programs'.",
     ),
     target: str = typer.Option(
         ...,
@@ -412,9 +412,9 @@ def alerts_create(
 
     try:
         alert = bb.create_alert(
-            type=type, target=target, medium=medium, destination=destination
+            resource=resource, target=target, medium=medium, destination=destination
         )
-        typer.echo(f"Successfully deleted alert '{alert.id}'.")
+        typer.echo(f"Successfully created alert '{alert.id}'.")
     except ApiResponseError as e:
         typer.echo(e)
         exit()
