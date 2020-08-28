@@ -178,7 +178,7 @@ def output_wide_alerts_table(alerts: List[Alert]):
     data = []
     for alert in alerts:
         data.append(
-            [alert.id, alert.resource, alert.target, alert.medium, alert.destination,]
+            [alert.id, alert.resource, alert.target, alert.medium, alert.destination]
         )
     typer.echo(tabulate(data, headers, tablefmt="plain"))
 
