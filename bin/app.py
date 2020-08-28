@@ -30,7 +30,9 @@ Please use https://github.com/bugbountyrecon/bbrecon/issues to report issues.
 )
 configure = typer.Typer(help="Configure bbrecon.")
 get = typer.Typer(help="Fetch resources.")
+delete = typer.Typer(help="Delete resources.")
 app.add_typer(get, name="get")
+app.add_typer(delete, name="delete")
 app.add_typer(configure, name="configure")
 
 
@@ -381,7 +383,7 @@ def alerts_get(
 
     try:
         if alert_ids:
-            alerts = list(bb.alert(id) for id in alert_ids)
+            alerts = list(bb.alert(id=id) for id in alert_ids)
         else:
             alerts = list(bb.alerts())
     except ApiResponseError as e:
@@ -389,6 +391,21 @@ def alerts_get(
         raise typer.Exit(1)
 
     _ALERTS_TABLE_OUTPUTS[output](alerts)
+
+
+@delete.command("alerts")
+def alerts_delete(alert_ids: Optional[List[str]] = typer.Argument(None)):
+    """
+    Delete one or more alerts.
+    """
+
+    try:
+        for id in alert_ids:
+            bb.delete_alert(id=id)
+            typer.echo(f"Successfully deleted alert '{id}'.")
+    except ApiResponseError as e:
+        typer.echo(e)
+        raise typer.Exit(1)
 
 
 @configure.command("key")
