@@ -62,10 +62,10 @@ class BugBountyRecon:
     def delete_alert(self, *, id: str) -> bool:
         delete_alert(client=self.client, id=id)
 
-    def create_alert(self, *, type: str, target: str, medium: str, destination: str):
+    def create_alert(self, *, resource: str, target: str, medium: str, destination: str):
         return create_alert(
             client=self.client,
-            type=type,
+            resource=resource,
             target=target,
             medium=medium,
             destination=destination,
