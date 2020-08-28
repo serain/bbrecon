@@ -40,14 +40,14 @@ def delete_alert(*, client: Client, id: str) -> bool:
 
 
 def create_alert(
-    *, client: Client, type: str, target: str, medium: str, destination: str
+    *, client: Client, resource: str, target: str, medium: str, destination: str
 ) -> Alert:
     url = "{}/v0b/alerts".format(client.base_url)
     response = httpx.post(
         url=url,
         headers=client.get_headers(),
         json={
-            "type": type,
+            "resource": resource,
             "target": target,
             "medium": medium,
             "destination": destination,
