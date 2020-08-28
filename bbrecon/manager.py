@@ -52,12 +52,12 @@ class BugBountyRecon:
         ):
             yield domain
 
-    def alert(self, id: str) -> Alert:
+    def alert(self, *, id: str) -> Alert:
         return get_alert(client=self.client, id=id)
 
     def alerts(self) -> Generator[Program, None, None]:
         for alert in paginate(self.client, get_alerts):
             yield alert
 
-    def delete_alert(self, id: str) -> bool:
-        delete_alert(self.client, id=id)
+    def delete_alert(self, *, id: str) -> bool:
+        delete_alert(client=self.client, id=id)
