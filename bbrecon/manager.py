@@ -4,7 +4,7 @@ from datetime import datetime
 
 from .client import AuthenticatedClient
 from .api.programs import get_programs, get_program
-from .api.alerts import get_alerts, get_alert, delete_alert
+from .api.alerts import get_alerts, get_alert, delete_alert, create_alert
 from .api.domains import get_domains
 from .models import Program, Domain, Alert
 from .utils import paginate
@@ -61,3 +61,12 @@ class BugBountyRecon:
 
     def delete_alert(self, *, id: str) -> bool:
         delete_alert(client=self.client, id=id)
+
+    def create_alert(self, *, type: str, target: str, medium: str, destination: str):
+        return create_alert(
+            client=self.client,
+            type=type,
+            target=target,
+            medium=medium,
+            destination=destination,
+        )
