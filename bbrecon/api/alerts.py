@@ -29,3 +29,12 @@ def get_alert(*, client: Client, id: str) -> Union[Alert]:
     if response.status_code == 200:
         return Alert.from_dict(cast(Dict[str, Any], response.json()))
     raise ApiResponseError(code=response.status_code, detail=response.json())
+
+
+def delete_alert(*, client: Client, id: str) -> bool:
+    url = "{}/v0b/alerts/{id}".format(client.base_url, id=id)
+    response = httpx.delete(url=url, headers=client.get_headers())
+
+    if response.status_code == 204:
+        return True
+    raise ApiResponseError(code=response.status_code, detail=response.json())
