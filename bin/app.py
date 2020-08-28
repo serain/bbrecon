@@ -151,6 +151,9 @@ def output_narrow_domains_table(domains: List[Domain]):
     typer.echo(tabulate(data, headers, tablefmt="plain"))
 
 
+output_wide_domains_table = output_narrow_domains_table
+
+
 def output_json_alerts_table(alerts: List[Domain]):
     typer.echo(json.dumps([alert.to_dict() for alert in alerts], indent=4))
 
