@@ -8,7 +8,7 @@ from pathlib import Path, PurePath
 from datetime import datetime, timedelta
 
 from bbrecon import BugBountyRecon, Program, ApiResponseError, Domain
-from bbrecon.models import Alert
+from bbrecon.models import Notification
 
 from .utils import config, update
 
@@ -164,32 +164,47 @@ def output_narrow_domains_table(domains: List[Domain]):
 output_wide_domains_table = output_narrow_domains_table
 
 
-def output_json_alerts_table(alerts: List[Alert]):
-    typer.echo(json.dumps([alert.to_dict() for alert in alerts], indent=4))
+def output_json_notifications_table(notifications: List[Notification]):
+    typer.echo(
+        json.dumps([notification.to_dict() for notification in notifications], indent=4)
+    )
 
 
-def output_narrow_alerts_table(alerts: List[Alert]):
-    headers = ["ID", "RESOURCE", "TARGET", "MEDIUM"]
+def output_narrow_notifications_table(notifications: List[Notification]):
+    headers = ["ID", "RESOURCES", "TARGET", "MEDIUM"]
     data = []
-    for alert in alerts:
-        data.append([alert.id, alert.resource, alert.target, alert.medium])
-    typer.echo(tabulate(data, headers, tablefmt="plain"))
-
-
-def output_wide_alerts_table(alerts: List[Alert]):
-    headers = ["ID", "RESOURCE", "TARGET", "MEDIUM", "DESTINATION"]
-    data = []
-    for alert in alerts:
+    for notification in notifications:
         data.append(
-            [alert.id, alert.resource, alert.target, alert.medium, alert.destination]
+            [
+                notification.id,
+                notification.resources,
+                notification.target,
+                notification.medium,
+            ]
         )
     typer.echo(tabulate(data, headers, tablefmt="plain"))
 
 
-_ALERTS_TABLE_OUTPUTS = {
-    OutputFormat.json_: output_json_alerts_table,
-    OutputFormat.narrow: output_narrow_alerts_table,
-    OutputFormat.wide: output_wide_alerts_table,
+def output_wide_notifications_table(notifications: List[Notification]):
+    headers = ["ID", "RESOURCES", "TARGET", "MEDIUM", "DESTINATION"]
+    data = []
+    for notification in notifications:
+        data.append(
+            [
+                notification.id,
+                notification.resources,
+                notification.target,
+                notification.medium,
+                notification.destination,
+            ]
+        )
+    typer.echo(tabulate(data, headers, tablefmt="plain"))
+
+
+_NOTIFICATIONS_TABLE_OUTPUTS = {
+    OutputFormat.json_: output_json_notifications_table,
+    OutputFormat.narrow: output_narrow_notifications_table,
+    OutputFormat.wide: output_wide_notifications_table,
 }
 
 
@@ -375,75 +390,75 @@ format '%Y-%m-%d' can be supplied. Alternatively, the following keywords are sup
     _DOMAINS_TABLE_OUTPUTS[output](domains)
 
 
-@get.command("alerts")
-def alerts_get(
-    alert_ids: Optional[List[str]] = typer.Argument(None),
+@get.command("notifications")
+def notifications_get(
+    notification_ids: Optional[List[str]] = typer.Argument(None),
     output: OutputFormat = typer.Option(
         OutputFormat.wide, "--output", "-o", help="Output format."
     ),
 ):
     """
-    Display many alerts, in a table or as JSON.
+    Display many notifications, in a table or as JSON.
     """
 
     try:
-        if alert_ids:
-            alerts = list(bb.alert(id=id) for id in alert_ids)
+        if notification_ids:
+            notifications = list(bb.notification(id=id) for id in notification_ids)
         else:
-            alerts = list(bb.alerts())
+            notifications = list(bb.notifications())
     except ApiResponseError as e:
         typer.echo(e)
         raise typer.Exit(1)
 
-    _ALERTS_TABLE_OUTPUTS[output](alerts)
+    _NOTIFICATIONS_TABLE_OUTPUTS[output](notifications)
 
 
-@delete.command("alerts")
-def alerts_delete(alert_ids: Optional[List[str]] = typer.Argument(None)):
+@delete.command("notifications")
+def notifications_delete(notification_ids: Optional[List[str]] = typer.Argument(None)):
     """
-    Delete one or more alerts.
+    Delete one or more notifications.
     """
 
     try:
-        for id in alert_ids:
-            bb.delete_alert(id=id)
-            typer.echo(f"Successfully deleted alert '{id}'.")
+        for id in notification_ids:
+            bb.delete_notification(id=id)
+            typer.echo(f"Successfully deleted notification '{id}'.")
     except ApiResponseError as e:
         typer.echo(e)
         raise typer.Exit(1)
 
 
-@create.command("alerts")
-def alerts_create(
-    resource: str = typer.Option(
-        ..., "--resource", help="Resource to monitor. Currently supports 'programs'.",
+@create.command("notifications")
+def notifications_create(
+    resources: str = typer.Option(
+        ..., "--resources", help="Resources to monitor. Currently supports 'programs'.",
     ),
     target: str = typer.Option(
         ...,
         "--target",
         help="""
-Target to monitor. Use '*' for all. Must be '*' for 'programs' resource.""",
+Target to monitor. Use '*' for all. Must be '*' for 'programs' resources.""",
     ),
     medium: str = typer.Option(
         ...,
         "--medium",
-        help="Medium used to send alerts. Must be 'slack' or 'discord'.",
+        help="Medium used to send notifications. Must be 'slack' or 'discord'.",
     ),
     destination: str = typer.Option(
         ..., "--destination", help="Destination webhook URL."
     ),
 ):
     """
-    Create an alert to monitor on new resources, or changes to resources.
+    Create an notification to monitor on new resources, or changes to resources.
 
     Currently only 'programs' is supported.
     """
 
     try:
-        alert = bb.create_alert(
-            resource=resource, target=target, medium=medium, destination=destination
+        notification = bb.create_notification(
+            resources=resources, target=target, medium=medium, destination=destination
         )
-        typer.echo(f"Successfully created alert '{alert.id}'.")
+        typer.echo(f"Successfully created notification '{notification.id}'.")
     except ApiResponseError as e:
         typer.echo(e)
         raise typer.Exit(1)
@@ -454,7 +469,7 @@ def key_configure():
     path = PurePath.joinpath(Path.home(), ".bbrecon")
     token_path = PurePath.joinpath(path, "token")
     Path(path).mkdir(parents=True, exist_ok=True)
-    typer.echo("You can get a free API key from https://bugbountyrecon.com/")
+    typer.echo("You can get a free API key from https://console.bugbountyrecon.com/")
     token = typer.prompt("Enter your API key")
     with open(token_path, "w+") as f:
         print(token, file=f)
