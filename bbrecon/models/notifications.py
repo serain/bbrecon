@@ -3,12 +3,12 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
-from .alert import Alert
+from .notification import Notification
 
 
 @dataclass
-class Alerts:
-    data: List[Alert]
+class Notifications:
+    data: List[Notification]
     next_page: Optional[int] = None
 
     def to_dict(self) -> Dict[str, Any]:
@@ -21,11 +21,11 @@ class Alerts:
         return {"data": data, "nextPage": next_page}
 
     @staticmethod
-    def from_dict(d: Dict[str, Any]) -> Alerts:
+    def from_dict(d: Dict[str, Any]) -> Notifications:
         data = []
         for data_item_data in d["data"]:
-            data_item = Alert.from_dict(data_item_data)
+            data_item = Notification.from_dict(data_item_data)
             data.append(data_item)
         next_page = d.get("nextPage")
 
-        return Alerts(data=data, next_page=next_page)
+        return Notifications(data=data, next_page=next_page)

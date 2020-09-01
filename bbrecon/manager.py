@@ -4,9 +4,14 @@ from datetime import datetime
 
 from .client import AuthenticatedClient
 from .api.programs import get_programs, get_program
-from .api.alerts import get_alerts, get_alert, delete_alert, create_alert
+from .api.notifications import (
+    get_notifications,
+    get_notification,
+    delete_notification,
+    create_notification,
+)
 from .api.domains import get_domains
-from .models import Program, Domain, Alert
+from .models import Program, Domain, Notification
 from .utils import paginate
 
 
@@ -52,22 +57,22 @@ class BugBountyRecon:
         ):
             yield domain
 
-    def alert(self, *, id: str) -> Alert:
-        return get_alert(client=self.client, id=id)
+    def notification(self, *, id: str) -> Notification:
+        return get_notification(client=self.client, id=id)
 
-    def alerts(self) -> Generator[Program, None, None]:
-        for alert in paginate(self.client, get_alerts):
-            yield alert
+    def notifications(self) -> Generator[Program, None, None]:
+        for notification in paginate(self.client, get_notifications):
+            yield notification
 
-    def delete_alert(self, *, id: str) -> bool:
-        delete_alert(client=self.client, id=id)
+    def delete_notification(self, *, id: str) -> bool:
+        delete_notification(client=self.client, id=id)
 
-    def create_alert(
-        self, *, resource: str, target: str, medium: str, destination: str
+    def create_notification(
+        self, *, resources: str, target: str, medium: str, destination: str
     ):
-        return create_alert(
+        return create_notification(
             client=self.client,
-            resource=resource,
+            resources=resources,
             target=target,
             medium=medium,
             destination=destination,
