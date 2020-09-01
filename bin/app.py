@@ -413,7 +413,7 @@ def notifications_create(
         ...,
         "--target",
         help="""
-Target to monitor. Use '*' for all. Must be '*' for 'programs' resources.""",
+Target to monitor. Use 'ALL' for all resources. Must be 'ALL' for 'programs'.""",
     ),
     medium: str = typer.Option(
         ...,
