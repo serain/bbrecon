@@ -67,13 +67,7 @@ class BugBountyRecon:
     def delete_notification(self, *, id: str) -> bool:
         delete_notification(client=self.client, id=id)
 
-    def create_notification(
-        self, *, resources: str, target: str, medium: str, destination: str
-    ):
+    def create_notification(self, *, resources: str, program: str, webhook: str):
         return create_notification(
-            client=self.client,
-            resources=resources,
-            target=target,
-            medium=medium,
-            destination=destination,
+            client=self.client, resources=resources, program=program, webhook=webhook,
         )

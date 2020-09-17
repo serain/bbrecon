@@ -8,18 +8,16 @@ from typing import Any, Dict, Union
 @dataclass
 class Notification:
     resources: str
-    target: Union[str, None]
-    medium: str
-    destination: str
+    program: Union[str, None]
+    webhook: str
     id: str
     created_at: str
 
     def to_dict(self) -> Dict[str, Any]:
         return {
             "resources": self.resources,
-            "target": self.target,
-            "medium": self.medium,
-            "destination": self.destination,
+            "program": self.program,
+            "webhook": self.webhook,
             "id": self.id,
             "createdAt": self.created_at.isoformat(),
         }
@@ -28,9 +26,8 @@ class Notification:
     def from_dict(d: Dict[str, Any]) -> Notification:
         return Notification(
             resources=d["resources"],
-            target=d["target"],
+            program=d["program"],
             created_at=datetime.strptime(d["createdAt"], "%Y-%m-%dT%H:%M:%SZ"),
-            medium=d["medium"],
-            destination=d["destination"],
+            webhook=d["webhook"],
             id=d["id"],
         )
