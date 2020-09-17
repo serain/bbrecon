@@ -42,20 +42,14 @@ def delete_notification(*, client: Client, id: str) -> bool:
 
 
 def create_notification(
-    *, client: Client, resources: str, target: str, medium: str, destination: str
+    *, client: Client, resources: str, program: str, webhook: str
 ) -> Notification:
     url = "{}/v0b/notifications".format(client.base_url)
     response = httpx.post(
         url=url,
         headers=client.get_headers(),
-        json={
-            "resources": resources,
-            "target": target,
-            "medium": medium,
-            "destination": destination,
-        },
+        json={"resources": resources, "program": program, "webhook": webhook},
     )
-    print(url)
 
     if response.status_code == 201:
         return Notification.from_dict(cast(Dict[str, Any], response.json()))
