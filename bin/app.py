@@ -161,31 +161,25 @@ def output_json_notifications_table(notifications: List[Domain]):
 
 
 def output_narrow_notifications_table(notifications: List[Domain]):
-    headers = ["ID", "RESOURCES", "TARGET", "MEDIUM"]
+    headers = ["ID", "RESOURCES", "PROGRAM"]
     data = []
     for notification in notifications:
         data.append(
-            [
-                notification.id,
-                notification.resources,
-                notification.target,
-                notification.medium,
-            ]
+            [notification.id, notification.resources, notification.program]
         )
     typer.echo(tabulate(data, headers, tablefmt="plain"))
 
 
 def output_wide_notifications_table(notifications: List[Domain]):
-    headers = ["ID", "RESOURCES", "TARGET", "MEDIUM", "DESTINATION"]
+    headers = ["ID", "RESOURCES", "PROGRAM", "WEBHOOK"]
     data = []
     for notification in notifications:
         data.append(
             [
                 notification.id,
                 notification.resources,
-                notification.target,
-                notification.medium,
-                notification.destination,
+                notification.program,
+                notification.webhook,
             ]
         )
     typer.echo(tabulate(data, headers, tablefmt="plain"))
@@ -409,20 +403,14 @@ def notifications_create(
     resources: str = typer.Option(
         ..., "--resources", help="Resources to monitor. Currently supports 'programs'.",
     ),
-    target: str = typer.Option(
+    program: str = typer.Option(
         ...,
-        "--target",
+        "--program",
         help="""
-Target to monitor. Use 'ALL' for all resources. Must be 'ALL' for 'programs'.""",
+Program to monitor. Use 'ALL' for all resources. Must be 'ALL' for 'programs' resources.
+""",
     ),
-    medium: str = typer.Option(
-        ...,
-        "--medium",
-        help="Medium used to send notifications. Must be 'slack' or 'discord'.",
-    ),
-    destination: str = typer.Option(
-        ..., "--destination", help="Destination webhook URL."
-    ),
+    webhook: str = typer.Option(..., "--webhook", help="Destination webhook URL."),
 ):
     """
     Create an notification to monitor on new resources, or changes to resources.
@@ -432,7 +420,7 @@ Target to monitor. Use 'ALL' for all resources. Must be 'ALL' for 'programs'."""
 
     try:
         notification = bb.create_notification(
-            resources=resources, target=target, medium=medium, destination=destination
+            resources=resources, program=program, webhook=webhook
         )
         typer.echo(f"Successfully created notification '{notification.id}'.")
     except ApiResponseError as e:
