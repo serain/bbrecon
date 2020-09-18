@@ -2,11 +2,6 @@
   <p align="center">
     <img width="320px" src="https://raw.githubusercontent.com/serain/bbrecon/master/docs/logo_cropped.png">
   </p>
-  <p align="center">
-    <a href="https://gitter.im/bbrecon/community">
-      <img src="http://badges.gitter.im/serain/bbrecon.svg">
-    </a>
-  </p>
   <br />
 </dl>
 
@@ -24,8 +19,8 @@ Double check your scopes and ensure you stay within safe harbors.
 
 - **Public Programs** - public bug bounty programs indexed and searchable with filters (live)
 - **Domains** - domains in scope across programs (live)
+- **Notifications** - webhook alerts when programs are created, updated or domains discovered (live)
 - **Private Programs** - support for private programs (September 2020)
-- **Notifications** - webhook alerts when programs are created, updated or domains discovered (September 2020)
 - **Endpoints** - all HTTP and non-HTTP endpoints in scope across all programs (October 2020)
 
 ## Status
@@ -98,6 +93,13 @@ rebellion-defense  www.rebelliondefense.com  2020-08-23
 rebellion-defense  rebelliondefense.com      2020-08-23
 ...
 ```
+
+To create a Slack or Discord webhook notifications use `create notifications`:
+```
+bbrecon create notifications --resources programs --program ALL --webhook https://SLACK_OR_DISCORD_WEBHOOK_URL/
+```
+
+You can view your configured notifications with `get notifications`.
 
 Most commands can output JSON to make it easy to work with your scripts. Try `--output json`:
 
