@@ -19,7 +19,7 @@ Double check your scopes and ensure you stay within safe harbors.
 
 - **Public Programs** - public bug bounty programs indexed and searchable with filters (live)
 - **Domains** - domains in scope across programs (live)
-- **Notifications** - webhook alerts when programs are created, updated or domains discovered (live)
+- **Notifications** - webhook alerts when programs are created or domains discovered (live)
 - **Private Programs** - support for private programs (September 2020)
 - **Endpoints** - all HTTP and non-HTTP endpoints in scope across all programs (October 2020)
 
