@@ -198,6 +198,6 @@ You can interact directly with the REST API if you prefer. Check out the API doc
 
 ## Other Clients
 
-This is the "official" client for bbrecon. The following unofficial clients are not reviewed or endorsed, but you may find them interesting:
+The following clients for Bug Bounty Recon are not reviewed or endorsed by myself, but you may find them interesting nonetheless:
 
 * [bbrecon_mobile_client](https://github.com/ponnamkarthik/bbrecon_mobile_client) by [ponnamkarthik](https://github.com/ponnamkarthik)
