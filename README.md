@@ -195,3 +195,9 @@ for program in programs:
 ## REST API
 
 You can interact directly with the REST API if you prefer. Check out the API docs [here](https://docs.bugbountyrecon.com/index.html).
+
+## Other Clients
+
+This is the "official" client for bbrecon. The following unofficial clients are not reviewed or endorsed, but you may find them interesting:
+
+* [bbrecon_mobile_client](https://github.com/ponnamkarthik/bbrecon_mobile_client) by [ponnamkarthik](https://github.com/ponnamkarthik)
