@@ -58,6 +58,8 @@ def get_datetime_from_input(date_input: str) -> datetime:
         days = 365
     elif matches := re.match(r"last-(\d+)-days", date_input):
         days = int(matches[1])
+    elif re.match(r"\d{4}-\d{1,2}-\d{1,2}", date_input):
+        return datetime.strptime(date_input, '%Y-%m-%d')
     else:
         raise InvalidDateInputError()
     return datetime.today() - timedelta(days=days)
