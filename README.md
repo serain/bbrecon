@@ -5,7 +5,8 @@
   <br />
 </dl>
 
-**This project is no longer maintained and I took the crawling infrastructure offline. The audience was not big enough to justify maintaining it.**
+**This project is no longer maintained and I took the crawling infrastructure offline.**
+**The audience was not big enough to justify maintaining it.**
 
 Bug Bounty Recon (`bbrecon`) is a free Recon-as-a-Service for bug bounty hunters and security researchers. The API aims to provide a continuously up-to-date map of the Internet "safe harbor" attack surface, excluding out-of-scope targets.
 
